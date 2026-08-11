@@ -69,7 +69,8 @@ iframe{
     border-left: 0.5vh solid #38BDF8;
     border-bottom: 0.5vh solid #8B5CF6;
     border-right: 0.5vh solid #E879F9;
-    border-radius: 50%; 
+    border-top-left-radius: 50%; 
+    border-top-right-radius: 50%;
 }
 
 .header h1{
