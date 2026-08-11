@@ -25,6 +25,10 @@ p{
     line-height: 1.6; 
 }
 
+p:hover{
+    font-size: 110%; /* Slightly enlarges text on hover for emphasis */
+}
+
 a{
     color: #0284C7; /* Bright sky blue */
     text-decoration: none;

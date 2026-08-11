@@ -24,6 +24,10 @@ p{
     line-height: 1.6; 
 }
 
+p:hover{
+    font-size: 110%; /* Slightly enlarges text on hover for emphasis */
+}
+
 a{
     color: #FFD25F; /* Soft starlight gold */
     text-decoration: none;

@@ -25,6 +25,10 @@ p{
     line-height: 1.6; 
 }
 
+p:hover{
+    font-size: 110%; /* Slightly enlarges text on hover for emphasis */
+}
+
 a{
     color: #00F0FF; 
     text-decoration: none;
