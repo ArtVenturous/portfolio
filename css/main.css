@@ -6,7 +6,7 @@
 
 body{
     background-color: #0B0D17; /* Deep space dark blue/black */
-    font-size: 2vw;
+    font-size: 1.75vw;
     font-family: 'Inter', system-ui, -apple-system, sans-serif; /* Modern clean font */
     margin: 0;
     padding: 0;
@@ -19,7 +19,7 @@ p{
     text-indent: 10%;
     margin: 1%;
     text-align: justify;
-    line-height: 1.6; /* Improved readability */
+    line-height: 1.25; /* Improved readability */
 }
 
 p:hover{
