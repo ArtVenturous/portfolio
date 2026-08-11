@@ -181,14 +181,25 @@ a.active{
     }
 
     .navbar {
-        flex-direction: column; /* Stacks links vertically */
-    }
+            flex-direction: row; /* Forces links to stay side-by-side */
+            flex-wrap: nowrap;   /* Prevents them from dropping to a second line */
+            overflow-x: auto;    /* Adds a horizontal scrollbar if links overflow */
+            -webkit-overflow-scrolling: touch; /* Smooth swiping on iPhones */
+            justify-content: flex-start; /* Aligns to the left so scrolling feels natural */
+        }
 
     .navbar a {
-        width: 100%; /* Full width tap targets */
-        padding: 1em 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
+            width: auto;         /* Removes the 100% stacking width */
+            flex: 1;             /* Helps them space evenly */
+            white-space: nowrap; /* Prevents the text inside the link from breaking into two lines */
+            padding: 1em 1.5em;  /* Finger-friendly padding */
+            border-bottom: none; /* Removes the stack dividers */
+        }
+
+    /* Hide the scrollbar visually but keep the scroll function (optional but sleek) */
+    .navbar::-webkit-scrollbar {
+            display: none;
+        }
 
     .content-wrapper {
         flex-direction: column; /* Stacks sidebar and main content */
