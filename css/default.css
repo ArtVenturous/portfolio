@@ -1,0 +1,204 @@
+*{
+    box-sizing: border-box;
+    object-fit: contain; 
+    transition: all 0.3s ease-in-out; 
+}
+
+body{
+    background-color: #231C35; /* Mid-tone twilight purple */
+    font-size: clamp(16px, 1.5vw, 24px); 
+    font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+    margin: 0;
+    padding: 0;
+    color: #E0D8ED; /* Soft lavender-tinted gray */
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+p{
+    text-indent: 5%; 
+    margin: 1%;
+    text-align: justify;
+    line-height: 1.6; 
+}
+
+a{
+    color: #FFD25F; /* Soft starlight gold */
+    text-decoration: none;
+}
+
+a:hover{
+    color: #FF7A85; /* Cosmic coral */
+    text-shadow: 0 0 8px rgba(255, 122, 133, 0.4); 
+}
+
+hr{
+    background-color: #A78BFA;
+    border: none;
+    box-shadow: 0 0 10px rgba(167, 139, 250, 0.3); 
+    height: 0.25vh;
+}
+
+iframe{
+    width: 100%;
+    height: 60vh;
+    border: 0.2vw solid #6EE7B7; /* Minty nebula green */
+    box-shadow: 0 0 20px rgba(110, 231, 183, 0.15); 
+    border-radius: 8px;
+}
+
+/* --- HEADER (Flexbox) --- */
+.header{
+    /* Dusk nebula gradient */
+    background: linear-gradient(135deg, #2D2342 0%, #3F2E5E 50%, #543A6B 100%);
+    width: 100%;
+    padding: 2em;
+    border-bottom: 1px solid #433360;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    gap: 2em;
+}
+
+.header img{
+    width: 100px; 
+    border-left: 0.5vh solid #FFD25F;
+    border-bottom: 0.5vh solid #FF7A85;
+    border-right: 0.5vh solid #A78BFA;
+    border-top-left-radius: 50%; 
+    border-top-right-radius: 50%;
+}
+
+.header h1{
+    margin: 0;
+    font-size: 2.5em;
+    color: #FDF8FF; 
+    text-shadow: 0 0 15px rgba(255, 122, 133, 0.4); 
+    font-family: 'Orbitron', 'Montserrat', sans-serif; 
+    letter-spacing: 2px;
+}
+
+/* --- NAVBAR (Flexbox) --- */
+.navbar{
+    width: 100%;
+    background-color: rgba(43, 34, 66, 0.85); /* Frosted twilight glass */
+    backdrop-filter: blur(10px); 
+    border-bottom: 1px solid #433360;
+    z-index: 5;
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: center; 
+    flex-wrap: wrap; 
+}
+
+.navbar a{
+    padding: 1.5em 3em;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', system-ui, sans-serif;
+    color: #B5A8CC;
+}
+
+.navbar a:hover:not(.active) {
+    background-color: #362A4A;
+    color: #FFD25F;
+}
+
+a.active{
+    background-color: #A78BFA;
+    color: #1A1525;
+    box-shadow: 0 4px 10px rgba(167, 139, 250, 0.3); 
+}
+
+/* --- MAIN LAYOUT (Flexbox) --- */
+.content-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex: 1; 
+    width: 100%;
+    max-width: 1400px; 
+    margin: 0 auto;    
+}
+
+.side{
+    flex: 0 0 250px; 
+    padding: 2em 1.5em;
+    color: #B5A8CC; 
+    background-color: #231C35; 
+}
+
+.main{
+    flex: 1; 
+    background-color: #362A4A; /* Slightly lighter purple/slate */
+    padding: 2em 4em;
+    border-left: 1px solid #433360;
+}
+
+.main p::first-letter{
+    font-size: 150%;
+    color: #FF7A85; 
+    font-weight: bold;
+}
+
+.main h1{
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    border-bottom: 2px solid #FFD25F; 
+    padding-bottom: 0.25em;
+    color: #FDF8FF; 
+    margin-top: 0;
+}
+
+/* --- FOOTER --- */
+.footer{
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 1px;
+    font-size: 0.85em;
+    background-color: #1A1525; /* Darkest purple */
+    color: #8C7FA3;
+    padding: 2em;
+    border-top: 1px solid #433360;
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS (Screens under 768px)
+   ========================================= */
+@media screen and (max-width: 768px) {
+    
+    .header {
+        flex-direction: column; 
+        gap: 1em;
+        text-align: center;
+    }
+
+    .navbar {
+        flex-direction: column; 
+    }
+
+    .navbar a {
+        width: 100%; 
+        padding: 1em 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2); 
+    }
+
+    .content-wrapper {
+        flex-direction: column; 
+    }
+
+    .side {
+        flex: auto; 
+        width: 100%;
+        border-bottom: 1px solid #433360;
+    }
+
+    .main {
+        padding: 2em 1.5em; 
+        border-left: none;
+    }
+}
