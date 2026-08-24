@@ -46,13 +46,6 @@ hr{
     height: 0.25vh;
 }
 
-iframe{
-    width: 100%;
-    height: 60vh;
-    border: 0.2vw solid #2DD4BF; 
-    box-shadow: 0 0 20px rgba(45, 212, 191, 0.15); 
-    border-radius: 8px;
-}
 
 /* --- HEADER (Flexbox) --- */
 .header{
@@ -158,6 +151,14 @@ a.active{
     border-bottom: 2px solid #A855F7; 
     padding-bottom: 0.25em;
     color: #FFFFFF;
+    margin-top: 0;
+}
+
+.main h3{
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    padding-bottom: 0.25em;
+    color:  #00F0FF;
     margin-top: 0;
 }
 
