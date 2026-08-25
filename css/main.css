@@ -127,7 +127,7 @@ a.active{
 
 .side{
     flex: 0 0 250px; /* Fixed width sidebar (won't grow or shrink) */
-    padding: 2em 1.5em;
+    padding: 1.5em 1.0em;
     color: #94A3B8; 
     background-color: #0B0D17;
 }
