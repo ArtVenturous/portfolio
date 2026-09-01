@@ -122,6 +122,12 @@ a.active{
     box-shadow: 0 4px 10px rgba(56, 189, 248, 0.3); 
 }
 
+img {
+    max-width: 100%; /* Prevents the image from being wider than its parent container */
+    height: auto;     /* Automatically adjusts the height to keep proportions correct */
+    display: block;   /* Removes unwanted bottom spacing in layout blocks */
+}
+
 /* --- MAIN LAYOUT (Flexbox) --- */
 .content-wrapper {
     /* Flexbox puts the sidebar and main content side-by-side */

@@ -40,7 +40,6 @@ a:hover{
 
 hr{
     background-color: #A78BFA;
-    border: none;
     box-shadow: 0 0 10px rgba(167, 139, 250, 0.3); 
     height: 0.25vh;
 }
@@ -51,6 +50,12 @@ iframe{
     border: 0.2vw solid #6EE7B7; /* Minty nebula green */
     box-shadow: 0 0 20px rgba(110, 231, 183, 0.15); 
     border-radius: 8px;
+}
+
+img {
+    max-width: 100%; /* Prevents the image from being wider than its parent container */
+    height: auto;     /* Automatically adjusts the height to keep proportions correct */
+    display: block;   /* Removes unwanted bottom spacing in layout blocks */
 }
 
 /* --- HEADER (Flexbox) --- */
@@ -131,9 +136,13 @@ a.active{
 
 .side{
     flex: 0 0 250px; 
-    padding: 1.5em 1.0em;
+    padding: 0.75em;
     color: #B5A8CC; 
     background-color: #231C35; 
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers items horizontally */
 }
 
 .main{

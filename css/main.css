@@ -46,6 +46,11 @@ hr{
     height: 0.25vh;
 }
 
+img {
+    max-width: 100%; /* Prevents the image from being wider than its parent container */
+    height: auto;     /* Automatically adjusts the height to keep proportions correct */
+    display: block;   /* Removes unwanted bottom spacing in layout blocks */
+}
 
 /* --- HEADER (Flexbox) --- */
 .header{
@@ -125,18 +130,24 @@ a.active{
     margin: 0 auto;    /* Centers the layout */
 }
 
-.side{
-    flex: 0 0 250px; /* Fixed width sidebar (won't grow or shrink) */
+.side {
+    flex: 0 0 250px;
     padding: 1.5em 1.0em;
     color: #94A3B8; 
     background-color: #0B0D17;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers items horizontally */
+    text-align: center;  /* Centers the paragraph text */
 }
+
 
 .main{
     flex: 1; /* Takes up all remaining width automatically */
     background-color: #12142B; 
     padding: 2em 4em;
-    border-left: 1px solid #1E1E3F;
+    /* border-left: 1px solid #1E1E3F; */
 }
 
 .main p::first-letter{
@@ -220,4 +231,110 @@ a.active{
         padding: 2em 1.5em; /* Reduce padding on small screens */
         border-left: none;
     }
+}
+
+/* --- CYBER-POSTCARD CONTACT FORM --- */
+/* Define the pulsing neon glow animation */
+@keyframes cyberPulse {
+    0% {
+        border-color: #00F0FF;
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.3), inset 0 0 10px rgba(0, 240, 255, 0.1);
+    }
+    50% {
+        border-color: #A855F7;
+        box-shadow: 0 0 30px rgba(168, 85, 247, 0.7), inset 0 0 20px rgba(168, 85, 247, 0.3);
+    }
+    100% {
+        border-color: #00F0FF;
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.3), inset 0 0 10px rgba(0, 240, 255, 0.1);
+    }
+}
+
+/* Apply the animation to your postcard container */
+.contact-postcard {
+    background-color: #12142B; 
+    color: #E2E8F0;
+    max-width: 700px;
+    margin: 2em auto;
+    padding: 3em;
+    border-radius: 8px;
+    position: relative;
+    
+    /* Set initial border and trigger the continuous pulse */
+    border: 2px solid #00F0FF;
+    animation: cyberPulse 4s infinite ease-in-out;
+}
+
+.contact-postcard h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: #83c7ff;
+    text-align: center;
+    border-bottom: 2px solid #55a9f7;
+    padding-bottom: 0.5em;
+    margin-top: 0;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+}
+
+.contact-postcard form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.postcard-message-side {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.contact-postcard label {
+    color: #00F0FF; /* Neon Cyan accent for labels */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 0.9em;
+    text-transform: uppercase;
+}
+
+.contact-postcard textarea {
+    width: 100%;
+    background-color: rgba(11, 13, 23, 0.7);
+    border: 1px dashed #A855F7;
+    border-radius: 4px;
+    padding: 1.25rem;
+    color: #E2E8F0;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 160px;
+    transition: all 0.3s ease;
+}
+
+.contact-postcard textarea:focus {
+    outline: none;
+    border-color: #00F0FF;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    background-color: #0B0D17;
+}
+
+/* Button matching your site's neon aesthetic */
+.contact-postcard .btn {
+    background-color: transparent;
+    color: #00F0FF;
+    border: 2px solid #00F0FF;
+    padding: 0.85rem 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    align-self: center;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.contact-postcard .btn:hover {
+    background-color: #00F0FF;
+    color: #0B0D17;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
 }
