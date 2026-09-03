@@ -166,7 +166,90 @@ a.active{
     color: #FDF8FF; 
     margin-top: 0;
 }
+.main em{
+    color: #FFD25F; 
+    font-size: 0.95em;
+    font-weight: 600; 
+}
 
+/* --- SEARCH BAR STYLING --- */
+.search-box {
+    margin: 1.5rem 0 2rem 0;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.85rem 1.2rem;
+    background-color: #0B0D17;
+    border: 1px solid #433360;
+    border-radius: 6px;
+    color: #E0D8ED;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #FFD25F;
+    box-shadow: 0 0 10px rgba(255, 210, 95, 0.3);
+}
+
+/* --- PROJECT CATALOGUE GRID --- */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+}
+
+/* Individual Card Styling */
+.project-card {
+    background-color: #231C35;
+    border: 1px solid #433360;
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    border-color: #A78BFA;
+    box-shadow: 0 6px 15px rgba(167, 139, 250, 0.2);
+}
+
+.project-card h3 {
+    color: #FDF8FF;
+    margin-top: 0;
+    font-family: 'Montserrat', sans-serif;
+    border-bottom: 1px solid #433360;
+    padding-bottom: 0.5rem;
+}
+
+.project-card p {
+    text-indent: 0; /* Removes standard paragraph indent inside cards for cleaner readability */
+    font-size: 0.95rem;
+    color: #B5A8CC;
+}
+
+.project-tech {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: #FFD25F;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+}
 /* --- FOOTER --- */
 .footer{
     text-align: center;
