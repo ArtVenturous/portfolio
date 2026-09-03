@@ -3,7 +3,9 @@
     object-fit: contain; 
     transition: all 0.3s ease-in-out; 
 }
-
+html {
+      scroll-behavior: smooth;
+}
 body{
     background-color: #0B0D17; 
     font-size: clamp(16px, 1.5vw, 24px); /* Fluid typography */
