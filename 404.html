@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found — Redirecting...</title>
+    <link rel="stylesheet" href="css/default.css">
+    
+    <!-- Meta Refresh Fallback: Automatically redirects to home after 5 seconds if JS fails -->
+    <meta http-equiv="refresh" content="5;url=index.html">
+</head>
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center;">
+
+    <div class="main" style="max-width: 600px; border: 1px solid #433360; border-radius: 8px; padding: 3rem;">
+        <h1 style="color: #FF7A85; font-size: 3em; margin-top: 0;">404</h1>
+        <h2>Lost in the Digital Void</h2>
+        <p>The page or link you are looking for has been misplaced or does not exist. You will be automatically redirected to home shortly.</p>
+        
+        <div style="margin-top: 2rem;">
+            <a href="index.html" class="btn" style="background-color: #A78BFA; color: #1A1525; padding: 0.75rem 1.5rem; border-radius: 4px; font-weight: bold;">Return Home Now</a>
+        </div>
+    </div>
+
+    <!-- JavaScript Instant Redirect & Logging -->
+    <script>
+        // Optional: Log the broken URL path to console for debugging
+        console.warn("Missing link accessed: " + window.location.href);
+
+        // Instantly redirect back to home after 4 seconds smoothly
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 4000);
+    </script>
+</body>
+</html>
