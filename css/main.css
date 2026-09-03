@@ -278,6 +278,18 @@ a.active{
         padding: 2em 1.5em; /* Reduce padding on small screens */
         border-left: none;
     }
+
+    .icon-container {
+        flex-direction: column; /* Stacks icons vertically */       
+    }
+    .icon-link {
+        width: 150px; /* Adjusts icon size for smaller screens */
+        height: 150px;
+    }
+    .icon-img {
+        width: 80%; /* Adjusts icon image size for smaller screens */
+        height: 80%;
+    }
 }
 
 /* --- CYBER-POSTCARD CONTACT FORM --- */
