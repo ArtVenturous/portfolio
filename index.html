@@ -8,10 +8,13 @@
     <link rel="icon" href="assets/icon.png">
   </head>
   <body>
+    <!-- Header -->
     <div class="header">
       <img src="assets/profile.png" alt="Profile Picture" class="profile-pic">
       <h1>April Rose Templo Orandain</h1>
     </div>
+
+    <!-- Navigation -->
     <div class="navbar">
       <a href="index.html" class="active">Home</a>
       <a href="projects.html">Projects</a>
@@ -19,114 +22,191 @@
       <a href="contact.html">Contact me</a>
     </div>
 
-<div class="main">
-  <div id="1">
-    <h1>Executive Profile</h1>
-    <p>Computer Engineering freshgraduate with solid foundation in hardware and software systems.</p>
-    <!-- <p>Proficient in programming languages such as C, C++, and Python, with experience in UI/UX web development using HTML, CSS, and JavaScript.</p> -->
-    <p>Passionate about developing innovative solutions and gaining hands-on experience in modern technologies.</p>
-    <p>Strong problem-solving skills and ability to work collaboratively in team environments.</p>
-    <p>Actively seeking job opportunities or internships to apply academic knowledge in real-world applications.</p>
-  </div>
-  <br><br><br>
-  <div id="2">
-    <h1>Work Experience</h1>
-    <ul>
-      <li>
-        <h3>Intern</h3>
-        <h4>
-        Department of Information and Communications Technology Region 5 Catanduanes<br>
-        San Isidro, Virac, Catanduanes<br>
-        <em>June 2025 - July 2025 (300 hours)</em>
-        </h4>
-        <ul>
-          <li>Assisted in logistics operations and provided technical support during the National Information and Communications Technology Month 2025.</li>
-          <!-- <li>Assisted in the development and maintenance of web applications, ensuring functionality and user experience.</li> -->
-          <li>Collaborated with team members to troubleshoot and resolve technical issues, contributing to the overall efficiency of projects.</li>
-          <!-- <li>Participated in code reviews and provided constructive feedback to enhance code quality and maintainability.</li> -->
-          <!-- <li>Gained hands-on experience in software development processes, including version control, testing, and deployment.</li> -->
-          <li>Served as a substitute front desk assistant, tasked with receiving visitors, answering initial inquiries, and directing clients to the appropriate office or personnel.</li>
-        </ul>
-      </li>
-    </ul>
-    <ul>
-      <!-- Insert more here -->
-    </ul>
-  </div>
-  <br><br><br>
-  <div id="3">
-    <h1>Education</h1>
-    <ul>
-      <li>
-        <h3>Tertiary Level</h3>
-        <h4>
-        <strong>Bachelor of Science in Computer Engineering</strong><br>  
-        Catanduanes State University<br>
-        Calatagan, Virac, Catanduanes<br>
-        2022 - 2026<br>
-        </h4>
-      </li>
-      <li>
-        <h3>Secondary Level</h3>
-        <h4>
-        <strong>Science, Technology, Engineering, and Mathematics Stand – Physics Track</strong><br>
-        Philippine Science High School – Bicol Region Campus<br>
-        Tagongtong, Goa, Camarines Sur<br>
-        2016 - 2022<br>
-        </h4>
-      </li>
-      <li>
-        <h3>Primary Level</h3>
-        <h4>
-        Virac Pilot Elementary School – Special Science Elementary School<br>
-        San Roque, Virac, Catanduanes<br>
-        2010 - 2016<br>
-        </h4>
-      </li>
-    </ul>
-  </div>
-  <br><br><br>
-  <div id="4">
-    <h1>Certifications</h1>
-    <ul>
-      <li>Career Service Professional Eligibility, <em>2 March 2025 Passer</em></li>
-      <!-- <li>Insert more here<em> </em></li> -->
-    </ul>
-  </div>
-  <br><br><br>
-  <div id="5">
-    <h1>Skills</h1>
-    <ul>
-      <li>Basic Computer Literacy. Proficient in using Office Suite Tools (<em>Word, Excel, Powerpoint</em>)</li>
-      <li>Programming Languages: C, C++, Python</li>
-      <li>Web Development: HTML, CSS, JavaScript</li>
-      <li>Software Development: Version Control, Testing, Deployment</li>
-      <li>
-        Soft Skills:
-      <ul>
-          <li>Adaptability and Flexibility</li>
-          <li>Time Management and Organization</li>
-          <li>Critical Thinking and Decision Making</li>
-          <li>Leadership and Teamwork</li>  
-      </ul>
-      </li>
-    </ul>
-  </div>
-  <br><br><br>
-  <div id="6">
-    <h1>Others</h1>
-    <p>I am a dedicated and passionate individual with a strong foundation in computer engineering and a keen interest in software development. I am always eager to learn new technologies and improve my skills.</p>
-    <p>In my free time, I enjoy reading, writing, and exploring new ideas. I am also an advocate for digital literacy and believe in the power of technology to transform lives.</p>
-    <p>As a testiment to my dedication and passion, I strive to actively participate in projects and initiatives that align with my values and goals.</p>
-  </div>
-  <br><br><br>
-  <div id="7">
-    <h1>References</h1>
-    <p>Available upon request.</p>
-  </div>
-  <br><br><br>
-</div>
-  <div class="footer">
+    <!-- Main Layout Container -->
+    <div class="content-wrapper">
+      
+      <!-- Sticky Sidebar Quick Navigation -->
+      <aside class="side">
+        <div class="side-nav">
+          <h3 class="side-title">Quick Index</h3>
+          <hr>
+          <ul class="side-links">
+            <li><a href="#profile">Executive Profile</a></li>
+            <li><a href="#experience">Work Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#others">Others</a></li>
+            <li><a href="#references">References</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main Resume Content Area -->
+      <main class="main">
+        
+        <!-- Section 1: Executive Profile -->
+        <section id="profile" class="cv-section">
+          <h1>Executive Profile</h1>
+          <div class="cv-card profile-card">
+            <p>Computer Engineering freshgraduate with solid foundation in hardware and software systems.</p>
+            <p>Passionate about developing innovative solutions and gaining hands-on experience in modern technologies.</p>
+            <p>Strong problem-solving skills and ability to work collaboratively in team environments.</p>
+            <p>Actively seeking job opportunities or internships to apply academic knowledge in real-world applications.</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Work Experience -->
+        <section id="experience" class="cv-section">
+          <h1>Work Experience</h1>
+          <div class="timeline-item">
+            <div class="entry-header">
+              <div>
+                <h3 class="role-title">Intern</h3>
+                <h4 class="org-name">Department of Information and Communications Technology Region 5 Catanduanes</h4>
+                <span class="location">San Isidro, Virac, Catanduanes</span>
+              </div>
+              <span class="badge-date">June 2025 - July 2025 (300 hours)</span>
+            </div>
+            <ul class="cv-list">
+              <li>Assisted in logistics operations and provided technical support during the National Information and Communications Technology Month 2025.</li>
+              <li>Collaborated with team members to troubleshoot and resolve technical issues, contributing to the overall efficiency of projects.</li>
+              <li>Served as a substitute front desk assistant, tasked with receiving visitors, answering initial inquiries, and directing clients to the appropriate office or personnel.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Education -->
+        <section id="education" class="cv-section">
+          <h1>Education</h1>
+          
+          <div class="timeline-item">
+            <div class="entry-header">
+              <div>
+                <h3 class="degree-level">Tertiary Level</h3>
+                <h4 class="school-name">Catanduanes State University</h4>
+                <span class="location">Calatagan, Virac, Catanduanes</span>
+                <h4 class="study-track">Bachelor of Science in Computer Engineering</h4>
+              </div>
+              <span class="badge-date">2022 - 2026</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="entry-header">
+              <div>
+                <h3 class="degree-level">Secondary Level</h3>
+                <h4 class="school-name">Philippine Science High School – Bicol Region Campus</h4>
+                <span class="location">Tagongtong, Goa, Camarines Sur</span>
+                <h4 class="study-track">Science, Technology, Engineering, and Mathematics Stand – Physics Track</h4>
+              </div>
+              <span class="badge-date">2016 - 2022</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="entry-header">
+              <div>
+                <h3 class="degree-level">Primary Level</h3>
+                <h4 class="school-name">Virac Pilot Elementary School – Special Science Elementary School</h4>
+                <span class="location">San Roque, Virac, Catanduanes</span>
+              </div>
+              <span class="badge-date">2010 - 2016</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: Certifications -->
+        <section id="certifications" class="cv-section">
+          <h1>Certifications</h1>
+          <div class="cv-card">
+            <ul class="cv-list">
+              <li>Career Service Professional Eligibility, <em>2 March 2025 Passer</em></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Section 5: Skills -->
+        <section id="skills" class="cv-section">
+          <h1>Skills</h1>
+          <div class="skills-grid">
+            
+            <div class="skill-group">
+              <span class="skill-label">Computer Literacy</span>
+              <p class="skill-desc">Proficient in using Office Suite Tools</p>
+            <div class="tags">
+                <span class="tag">Word</span>
+                <span class="tag">Excel</span>
+                <span class="tag">PowerPoint</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <span class="skill-label">Programming Languages</span>
+              <p class="skill-desc">Basic knowledge and experience with programming concepts and languages</p>
+              <div class="tags">
+                <span class="tag">C</span>
+                <span class="tag">C++</span>
+                <span class="tag">Python</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <span class="skill-label">Web Development</span>
+              <p class="skill-desc">Experience in building responsive and user-friendly websites using native web technologies</p>
+              <div class="tags">
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+                <span class="tag">JavaScript</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <span class="skill-label">Software Development</span>
+              <p class="skill-desc">Familiarity with software development methodologies and practices</p>
+              <div class="tags">
+                <span class="tag">Version Control</span>
+                <span class="tag">Testing</span>
+                <span class="tag">Deployment</span>
+              </div>
+            </div>
+
+            <div class="skill-group full-width">
+              <span class="skill-label">Soft Skills</span>
+              <div class="tags">
+                <span class="tag">Adaptability and Flexibility</span>
+                <span class="tag">Time Management and Organization</span>
+                <span class="tag">Critical Thinking and Decision Making</span>
+                <span class="tag">Leadership and Teamwork</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Section 6: Others -->
+        <section id="others" class="cv-section">
+          <h1>Others</h1>
+          <div class="cv-card">
+            <p>I am a dedicated and passionate individual with a strong foundation in computer engineering and a keen interest in software development. I am always eager to learn new technologies and improve my skills.</p>
+            <p>In my free time, I enjoy reading, writing, and exploring new ideas. I am also an advocate for digital literacy and believe in the power of technology to transform lives.</p>
+            <p>As a testiment to my dedication and passion, I strive to actively participate in projects and initiatives that align with my values and goals.</p>
+          </div>
+        </section>
+
+        <!-- Section 7: References -->
+        <section id="references" class="cv-section">
+          <h1>References</h1>
+          <div class="cv-card">
+            <p>Available upon request.</p>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
       &copy; 2026 ARTO. All Rights Reserved.
     </div>
   </body>
