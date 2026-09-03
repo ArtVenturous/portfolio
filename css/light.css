@@ -219,10 +219,67 @@ img {
         flex-direction: column; 
     }
 
+    /* --- PIN RESUME INDEX TO THE TOP --- */
     .side {
         flex: auto; 
         width: 100%;
         border-bottom: 1px solid #E2E8F0;
+        padding: 0.75rem 1rem;
+        
+        /* Pins sidebar to the top right below your main sticky navbar */
+        position: sticky;
+        top: 3.5rem; /* Adjust based on navbar height */
+        z-index: 4;
+        background-color: rgba(248, 250, 252, 0.95); /* Semi-transparent light backdrop */
+        backdrop-filter: blur(8px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Keep the sticky context clean inside the sidebar on mobile */
+    .side-nav {
+        position: static;
+    }
+
+    /* Hide the "Resume Index" header and hr on mobile to conserve screen space */
+    .side-title,
+    .side-nav hr {
+        display: none;
+    }
+
+    /* Turn the index links into a swipeable horizontal pill list */
+    .side-links {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        margin: 0;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 2px;
+    }
+
+    .side-links::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for a clean app-like look */
+    }
+
+    .side-links li {
+        margin-bottom: 0;
+    }
+
+    /* Style the links as tap-friendly pills */
+    .side-links a {
+        background: #EDE9FE;
+        color: #6D28D9;
+        padding: 0.4rem 0.9rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .side-links a:hover {
+        transform: none;
+        background: #38BDF8;
+        color: #FFFFFF;
     }
 
     .main {
@@ -232,8 +289,13 @@ img {
 }
 
 /* --- RESUME SECTION & CARD SPACING --- */
+
 .cv-section {
     margin-bottom: 3.5rem;
+}
+
+.cv-section h1 {
+    scroll-margin-top: 8rem; /* Clears both sticky bars cleanly */
 }
 
 .cv-card {
