@@ -145,6 +145,39 @@ a.active{
     align-items: center; /* Centers items horizontally */
 }
 
+/* --- SIDEBAR INTERACTIVE PILLS --- */
+.sidebar-pills-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding: 0 0.5rem;
+}
+
+.project-pill {
+    display: block;
+    background-color: rgba(67, 51, 96, 0.3);
+    border: 1px solid #A78BFA;
+    color: #E0D8ED;
+    padding: 0.6rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glowing Hover State */
+.project-pill:hover {
+    background-color: #FFD25F;
+    color: #1A1525;
+    border-color: #FFD25F;
+    box-shadow: 0 0 12px rgba(255, 210, 95, 0.6);
+    transform: translateY(-2px) scale(1.03);
+}
+
 .main{
     flex: 1; 
     background-color: #362A4A; /* Slightly lighter purple/slate */

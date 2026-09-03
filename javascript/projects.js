@@ -77,4 +77,23 @@ searchInput.addEventListener('input', (e) => {
 
     displayProjects(filteredProjects);
 });
-    
+
+// Sidebar pill hover effect
+const pills = document.querySelectorAll('.project-pill');
+
+pills.forEach(pill => {
+    const targetId = pill.getAttribute('data-target');
+    const matchingCard = document.getElementById(targetId);
+
+    if (matchingCard) {
+        pill.addEventListener('mouseenter', () => {
+            matchingCard.style.borderColor = '#FFD25F';
+            matchingCard.style.boxShadow = '0 0 20px rgba(255, 210, 95, 0.4)';
+        });
+
+        pill.addEventListener('mouseleave', () => {
+            matchingCard.style.borderColor = '#433360';
+            matchingCard.style.boxShadow = 'none';
+        });
+    }
+});
