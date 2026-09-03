@@ -10,6 +10,6 @@ contactForm.addEventListener('submit', (e) => {
     const body = encodeURIComponent(message);
     
     // Open in separate window/app and reset form
-    window.open(`mailto:${myEmail}?subject=${subject}&body=${body}`, '_blank');
+    window.open(`mailto:${myEmail}?subject=${subject}&body=${body}`, '_blank', 'noopener,noreferrer');
     contactForm.reset();
 });

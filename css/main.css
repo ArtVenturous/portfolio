@@ -187,6 +187,51 @@ a.active{
     border-top: 1px solid #1E1E3F;
 }
 
+/* Layout Container */
+.icon-container {
+  display: flex;            /* Activates Flexbox layout */
+  flex-direction: row;      /* Places items horizontally */
+  gap: 20px;                /* Controls space between icons perfectly */
+  justify-content: center;  /* Centers the row (change to flex-start for left-align) */
+  align-items: center;      /* Centers icons vertically */
+  padding: 15px;
+}
+
+/* Base Icon Link Structure */
+.icon-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 12.5%;
+  height: 12.5%;
+  border-radius: 10px;  
+  padding: 10px; 
+  margin: 0 10px;   
+  
+  /* The dynamic secret: smoothly transitions changes over 0.3 seconds */
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+
+/* The Icon Image sizing */
+.icon-img {
+  width: 90%;              /* Controls the scale of the icon graphic inside */
+  height: 90%;
+}
+
+/* Dynamic Interaction Effects (Hover & Focus) */
+.icon-link:hover, 
+.icon-link:focus {
+  transform: scale(1.15);     /* Dynamic scale pop effect */
+  background-color: #007bff; /* Changes background color dynamically on hover */
+  box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3); /* Dynamic drop shadow glow */
+}
+
+/* Ensure the image scales neatly with the container */
+.icon-link:hover .icon-img {
+  filter: brightness(0) invert(1); /* Dynamically turns a black Flaticon SVG into pure white */
+}
+    
+
 /* =========================================
    MOBILE RESPONSIVENESS (Screens under 768px)
    ========================================= */
