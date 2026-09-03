@@ -26,40 +26,46 @@ const searchInput = document.getElementById('search-input');
 
 // 2. Render function for the project cards
 function displayProjects(projectsToDisplay) {
-grid.innerHTML = ""; // Clear current grid
+    grid.innerHTML = ""; 
 
-if (projectsToDisplay.length === 0) {
-grid.innerHTML = `<p style="color: #94A3B8; grid-column: 1 / -1; text-align: center;">No matching projects found.</p>`;
-return;
-}
+    if (projectsToDisplay.length === 0) {
+        grid.innerHTML = `<p style="grid-column: 1 / -1; text-align: center;">No matching projects found.</p>`;
+        return;
+    }
 
-projectsToDisplay.forEach(project => {
-const card = document.createElement('a');
-card.href = project.url;
-card.className = 'project-card-link'; 
+    projectsToDisplay.forEach(project => {
+        const card = document.createElement('article');
+        card.className = 'project-card'; 
 
-// Conditionally create the image HTML block ONLY if the project has an image property
-let imageHTML = "";
-if (project.image) {
-    imageHTML = `
-        <div class="project-image-container">
-            <img src="${project.image}" alt="${project.title}">
-        </div>
-    `;
-}
+        let mediaHTML = "";
+        
+        // Check if the project has an embedded video
+        if (project.videoEmbed) {
+            mediaHTML = `
+                <div class="video-container">
+                    <iframe src="${project.videoEmbed}" title="${project.title}" frameborder="0" allowfullscreen></iframe>
+                </div>
+            `;
+        } 
+        // Check if it has a standard image preview
+        else if (project.image) {
+            mediaHTML = `
+                <div class="project-image-container">
+                    <img src="${project.image}" alt="${project.title}">
+                </div>
+            `;
+        }
 
-card.innerHTML = `
-    <article class="project-card">
-        ${imageHTML} <!-- Will be empty if no image exists -->
-        <div>
-            <h3>${project.title}</h3>
-            <p>${project.description}</p>
-        </div>
-        <span class="project-tech">${project.tech}</span>
-    </article>
-`;
-grid.appendChild(card);
-});
+        card.innerHTML = `
+            ${mediaHTML}
+            <div>
+                <h3><a href="${project.url}" style="color: inherit; text-decoration: none;">${project.title}</a></h3>
+                <p>${project.description}</p>
+            </div>
+            <span class="project-tech">${project.tech}</span>
+        `;
+        grid.appendChild(card);
+    });
 }
 
 // Initial display of all projects
