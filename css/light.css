@@ -29,7 +29,7 @@ p{
 }
 
 p:hover{
-    font-size: 110%; /* Slightly enlarges text on hover for emphasis */
+    font-size: 125%; /* Slightly enlarges text on hover for emphasis */
 }
 
 a{
@@ -292,7 +292,7 @@ contact-links img {
         background: #EDE9FE;
         color: #6D28D9;
         padding: 0.4rem 0.9rem;
-        border-radius: 20px;
+        border-radius: 5px;
         font-size: 0.8rem;
         font-weight: 600;
     }
