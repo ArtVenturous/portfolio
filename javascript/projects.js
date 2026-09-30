@@ -2,6 +2,13 @@
 // 1. Project Data Array
 const projects = [
     {
+        title: "ATFDS",
+        description: "Automated Tricycle Fare Display System in Virac, Catanduanes: Undergraduate Thesis Project.",
+        tech: "Arduino, Embedded Systems",
+        videoEmbed: "https://www.youtube.com/embed/-TViXfhL0mM?si=8RhGcrp9X_wbavV4",
+        url: "https://youtu.be/-TViXfhL0mM"
+    },
+    {
         title: "Bridge to Tomorrow",
         description: "Empowering Minds Through ICT 3.0: A Digital Age Online Essay Writing Challenge Entry.",
         tech: "Essay, Literary",
