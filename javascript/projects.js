@@ -21,7 +21,7 @@ const projects = [
     },
     {
         title: "Stickman Adventures",
-        description: "A very short stickman animation made using FlipClip.",
+        description: "A very short stickman animation made using FlipaClip.",
         tech: "2D Animation",
         videoEmbed: "https://www.youtube.com/embed/TdfEaB891Gg?si=zJ_wUK8WS8CAbip5",
         url: "https://youtu.be/TdfEaB891Gg?si=zJ_wUK8WS8CAbip5"
@@ -74,7 +74,7 @@ function displayProjects(projectsToDisplay) {
 
         card.innerHTML = `
             <div>
-                <h3><a href="${project.url}" style="color: inherit; text-decoration: none;">${project.title}</a></h3>
+                <h3><a href="${project.url}" target="_blank" style="color: inherit; text-decoration: none;">${project.title}</a></h3>
                 ${mediaHTML}
                 <p>${project.description}</p>
             </div>
