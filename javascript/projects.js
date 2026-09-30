@@ -18,6 +18,13 @@ const projects = [
         description: "Reflections on society, simulated freedom, and the search for absolute truth.",
         tech: "Philosophy, Prose",
         url: "projects/Literary Works/ThoughtsOfAWanderer.html"
+    },
+    {
+        title: "Stickman Adventures",
+        description: "A very short stickman animation made using FlipClip.",
+        tech: "2D Animation",
+        videoEmbed: "https://www.youtube.com/embed/TdfEaB891Gg?si=zJ_wUK8WS8CAbip5",
+        url: "https://youtu.be/TdfEaB891Gg?si=zJ_wUK8WS8CAbip5"
     }
 ];
 
@@ -43,7 +50,16 @@ function displayProjects(projectsToDisplay) {
         if (project.videoEmbed) {
             mediaHTML = `
                 <div class="video-container">
-                    <iframe src="${project.videoEmbed}" title="${project.title}" frameborder="0" allowfullscreen></iframe>
+                    <iframe 
+                        width="560" 
+                        height="315" 
+                        src="${project.videoEmbed}" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" 
+                        allowfullscreen>
+                    </iframe>
                 </div>
             `;
         } 
@@ -57,9 +73,9 @@ function displayProjects(projectsToDisplay) {
         }
 
         card.innerHTML = `
-            ${mediaHTML}
             <div>
                 <h3><a href="${project.url}" style="color: inherit; text-decoration: none;">${project.title}</a></h3>
+                ${mediaHTML}
                 <p>${project.description}</p>
             </div>
             <span class="project-tech">${project.tech}</span>
