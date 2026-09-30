@@ -7,5 +7,5 @@ We never know what we could really do unless we actually do them. So, I tried.
 
 ## What have I done?
 - It feels like I am actually attempting to build a website in order to develop this digital portfolio. (Thanks to free hosting via GitHub Pages)
-- How shall I structure my projects here?
-- Coming Soon
+- Still migrating projects into webpage format
+- More Coming Soon
