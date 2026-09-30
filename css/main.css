@@ -101,7 +101,7 @@ img {
 }
 
 .navbar a{
-    padding: 1.5em 3em;
+    padding: 1em 3em; /* Finger-friendly padding */
     text-align: center;
     font-weight: 600;
     letter-spacing: 1px;
@@ -112,6 +112,7 @@ img {
 
 .navbar a:hover:not(.active) {
     background-color: #1E1E3F;
+    font-weight: bolder;
     color: #00F0FF;
 }
 

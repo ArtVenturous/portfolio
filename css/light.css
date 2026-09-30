@@ -51,7 +51,7 @@ hr{
 
 iframe{
     width: 100%;
-    height: 60vh;
+    height: 80vh;
     border: 0.2vw solid #38BDF8; 
     box-shadow: 0 0 20px rgba(56, 189, 248, 0.2); 
     border-radius: 8px;
@@ -105,7 +105,7 @@ iframe{
 }
 
 .navbar a{
-    padding: 1.5em 3em;
+    padding: 1em 3em;
     text-align: center;
     font-weight: 600;
     letter-spacing: 1px;
@@ -115,7 +115,8 @@ iframe{
 }
 
 .navbar a:hover:not(.active) {
-    background-color: rgba(241, 245, 249, 0.8);
+    background-color: rgba(167, 208, 212, 0.5);
+    font-weight: bolder;
     color: #0284C7;
 }
 
@@ -182,27 +183,6 @@ img {
     padding: 2em;
     border-top: 1px solid #E2E8F0;
 }
-contact-links {
-    display: flex;
-    justify-content: center;
-    gap: 2em;
-    margin-top: 1em;
-}
-contact-links a{
-    display: inline-block;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-contact-links a:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-contact-links img {
-    width: 50px; 
-    height: 50px; 
-    border-radius: 50%; 
-    border: 2px solid #38BDF8; 
-    transition: all 0.3s ease;
-}
 
 /* =========================================
    MOBILE RESPONSIVENESS (Screens under 768px)
@@ -245,7 +225,7 @@ contact-links img {
         flex: auto; 
         width: 100%;
         border-bottom: 1px solid #E2E8F0;
-        padding: 0.75rem 1rem;
+        padding: 0.1rem 1.5rem;
         
         /* Pins sidebar to the top right below your main sticky navbar */
         position: sticky;
@@ -259,6 +239,8 @@ contact-links img {
     /* Keep the sticky context clean inside the sidebar on mobile */
     .side-nav {
         position: static;
+        padding: 0;
+        margin: 0;
     }
 
     /* Hide the "Resume Index" header and hr on mobile to conserve screen space */
@@ -272,7 +254,6 @@ contact-links img {
         display: flex;
         flex-direction: row;
         gap: 0.5rem;
-        margin: 0;
         overflow-x: auto;
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
@@ -290,8 +271,7 @@ contact-links img {
     /* Style the links as tap-friendly pills */
     .side-links a {
         background: #EDE9FE;
-        color: #6D28D9;
-        padding: 0.4rem 0.9rem;
+        color: #aa76ff;
         border-radius: 5px;
         font-size: 0.8rem;
         font-weight: 600;
