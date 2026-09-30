@@ -92,7 +92,18 @@ function displayProjects(projectsToDisplay) {
 }
 
 // Initial display of all projects
-displayProjects(projects);
+function shuffle(cards) {
+  // Loop from the last element down to the second element
+  for (let i = cards.length - 1; i > 0; i--) {
+    // Pick a random index from 0 to i
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+    
+    // Swap the elements using destructuring assignment
+    [cards[i], cards[randomIndex]] = [cards[randomIndex], cards[i]];
+  }
+  return cards;
+}
+displayProjects(shuffle(projects));
 
 // 3. Live search filtering listener
 searchInput.addEventListener('input', (e) => {

@@ -54,6 +54,15 @@ img {
     display: block;   /* Removes unwanted bottom spacing in layout blocks */
 }
 
+iframe{
+    width: 100%;
+    height: 80vh;
+    border: 0.2vw solid #38BDF8; 
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.2); 
+    border-radius: 8px;
+    animation: cyberPulse 4s infinite ease-in-out;
+}
+
 /* --- HEADER (Flexbox) --- */
 .header{
     background: linear-gradient(135deg, #020024 0%, #0B0A26 50%, #1A1245 100%);
