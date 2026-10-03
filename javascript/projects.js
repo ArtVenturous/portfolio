@@ -12,12 +12,14 @@ const projects = [
         title: "Bridge to Tomorrow",
         description: "Empowering Minds Through ICT 3.0: A Digital Age Online Essay Writing Challenge Entry.",
         tech: "Essay, Literary",
+        videoEmbed: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FDICTRegionVBicol%2Fvideos%2F736507965578864%2F&show_text=false&width=560&t=0",
         url: "projects/Literary Works/BridgeToTomorrow.html"
     },
     {
         title: "Magkabilang Mundo",
         description: "A visual literary work exploring dual realities and emotional landscapes.",
         tech: "Visual Arts, Literary",
+        image: "projects/Literary Works/Magkabilang Mundo/Magkabilang Mundo.jpg",
         url: "projects/Literary Works/MagkabilangMundo.html"
     },
     {
@@ -61,11 +63,14 @@ function displayProjects(projectsToDisplay) {
                         width="560" 
                         height="315" 
                         src="${project.videoEmbed}" 
-                        title="YouTube video player" 
+                        title="${project.title}" 
                         frameborder="0" 
+                        scrolling="no" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                         referrerpolicy="strict-origin-when-cross-origin" 
-                        allowfullscreen>
+                        allowfullscreen="true"
+                        allowFullScreen="true"
+                        >
                     </iframe>
                 </div>
             `;
@@ -137,3 +142,4 @@ pills.forEach(pill => {
         });
     }
 });
+

@@ -50,7 +50,7 @@ hr{
 
 iframe{
     width: 100%;
-    height: 60vh;
+    height: 80vh;
     border: 0.2vw solid #6EE7B7; /* Minty nebula green */
     box-shadow: 0 0 20px rgba(110, 231, 183, 0.15); 
     border-radius: 8px;
