@@ -425,21 +425,49 @@ a.active{
 
 .carousel-bg-layer {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
+    z-index: 0;
+    background-color: #0b0d17; /* Base fallback color */
+}
+
+/* New classes for the dynamic media backgrounds */
+.bg-media-item {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    transition: background-color var(--transition-speed) ease-in-out;
-    z-index: -2; /* Keeps it strictly behind the vignette and the 3D cards */
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease-in-out;
+    z-index: 1;
 }
+
+.bg-media-item.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+/* Style the actual image/video to cover the screen */
+.bg-media-item img,
+.bg-media-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /*Adds a very slow, subtle zoom effect to the background */
+    transform: scale(1.05);
+    transition: transform 8s ease-out;
+}
+
+.bg-media-item.active img,
+.bg-media-item.active video {
+    transform: scale(1);
+}
+
+/* Darken the vignette slightly so text remains readable over bright images */
 .carousel-vignette {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, transparent 10%, #030505 120%);
-    z-index: -1;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(3,5,5,0.95) 120%);
+    z-index: 3; /* Must sit above the background media but below the 3D cards */
     pointer-events: none;
 }
 .carousel-container {
@@ -501,26 +529,55 @@ a.active{
     z-index: 1;
 }
 
-.card-overlay {
+/* Media covers the entire card */
+.card-thumbnail {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Dark gradient at the bottom so text is readable, fading to clear at the top */
-    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 40%, transparent 100%);
-    z-index: 2;
+    object-fit: cover;
+    z-index: 1;
+    transition: opacity var(--transition-speed) ease-in-out;
 }
 
+/* Gradient ensures text remains readable over the thumbnail */
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+    z-index: 2;
+    transition: opacity var(--transition-speed) ease-in-out;
+}
+
+/* Hide the thumbnail and overlay when the card is Active (Center) 
+   so the full-screen background layer takes over seamlessly */
+.card.active .card-thumbnail,
+.card.active .card-overlay {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Show them when the card is out of focus (Sides) */
+.card.prev .card-thumbnail,
+.card.prev .card-overlay,
+.card.next .card-thumbnail,
+.card.next .card-overlay {
+    opacity: 1;
+}
+
+/* Ensure the text sits cleanly at the bottom */
 .card-content {
     position: relative;
     z-index: 3;
-    padding: 40px;
     width: 100%;
+    padding: 40px;
+    margin-top: auto; /* Pushes content to the bottom of the card */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .card h2 {
     font-size: 2.2rem;
     font-weight: 800;
@@ -555,23 +612,24 @@ a.active{
 
 /* Left Card (Pushed to left edge, sharply angled) */
 .card.prev {
-    /* translate(-130%) moves it left relative to its own 50vw width */
-    transform: translate(-135%, -50%) translateZ(-300px) rotateY(45deg);
+    transform: translate(-155%, -50%) translateZ(-300px) rotateY(45deg);
     opacity: 0.4;
     z-index: 5;
     pointer-events: auto;
     cursor: pointer;
     filter: brightness(0.6);
+    width: 40vw; /* Slightly narrower than the center card for perspective */
 }
 
 /* Right Card (Pushed to right edge, sharply angled) */
 .card.next {
-    transform: translate(35%, -50%) translateZ(-300px) rotateY(-45deg);
+    transform: translate(55%, -50%) translateZ(-300px) rotateY(-45deg);
     opacity: 0.4;
     z-index: 5;
     pointer-events: auto;
     cursor: pointer;
     filter: brightness(0.6);
+    width: 40vw; /* Slightly narrower than the center card for perspective */
 }
 
 /* Hover effects for side cards */

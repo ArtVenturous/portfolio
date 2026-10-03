@@ -288,6 +288,23 @@ a.active{
     letter-spacing: 1px;
     font-family: 'Montserrat', sans-serif;
 }
+
+.project-card.featured-row {
+    grid-column: 1 / -1; 
+    width: 100%;
+    border-color: #FFD25F;
+    box-shadow: 0 0 20px rgba(255, 210, 95, 0.4);
+    transition: all 1.0s ease-in-out; 
+}
+
+/* Visually highlight the sidebar pill when it is locked */
+.project-pill.is-locked {
+    background-color: rgba(255, 210, 95, 0.1); /* Subtle glowing background */
+    color: #FFD25F;
+    border-left: 4px solid #FFD25F; /* Strong visual indicator on the side */
+    font-weight: bold;
+}
+
 /* --- FOOTER --- */
 .footer{
     text-align: center;

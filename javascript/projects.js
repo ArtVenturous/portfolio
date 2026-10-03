@@ -2,8 +2,8 @@
 // 1. Project Data Array
 const projects = [
     {
-        title: "ATFDS",
-        description: "Automated Tricycle Fare Display System in Virac, Catanduanes: Undergraduate Thesis Project.",
+        title: "Automated Tricycle Fare Display System (ATFDS)",
+        description: "Undergraduate Thesis Project: Arduino-based Real-Time Tricycle Fare Display System for Passenger Awareness in Virac, Catanduanes.",
         tech: "Arduino, Embedded Systems",
         videoEmbed: "https://www.youtube.com/embed/-TViXfhL0mM?si=8RhGcrp9X_wbavV4",
         url: "https://youtu.be/-TViXfhL0mM"
@@ -34,11 +34,24 @@ const projects = [
         tech: "2D Animation",
         videoEmbed: "https://www.youtube.com/embed/TdfEaB891Gg?si=zJ_wUK8WS8CAbip5",
         url: "https://youtu.be/TdfEaB891Gg?si=zJ_wUK8WS8CAbip5"
+    },
+    {
+        title: "Space Tron",
+        description: "A classic 2D 2-player game made using Scratch.",
+        tech: "Visual Programming, Game Development",
+        videoEmbed: "https://scratch.mit.edu/projects/227546816/embed",
+        url: "https://scratch.mit.edu/projects/227546816/fullscreen"
     }
 ];
 
 const grid = document.getElementById('project-grid');
 const searchInput = document.getElementById('search-input');
+const sidebarContainer = document.getElementById('sidebar-pills'); 
+
+// Helper function to create matching IDs for cards and pills
+function createSlug(text) {
+    return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+}
 
 // 2. Render function for the project cards
 function displayProjects(projectsToDisplay) {
@@ -52,31 +65,25 @@ function displayProjects(projectsToDisplay) {
     projectsToDisplay.forEach(project => {
         const card = document.createElement('article');
         card.className = 'project-card'; 
+        // Assign the generated ID to the card so the pill can find it
+        card.id = createSlug(project.title); 
 
         let mediaHTML = "";
         
-        // Check if the project has an embedded video
         if (project.videoEmbed) {
             mediaHTML = `
                 <div class="video-container">
                     <iframe 
-                        width="560" 
-                        height="315" 
-                        src="${project.videoEmbed}" 
-                        title="${project.title}" 
-                        frameborder="0" 
-                        scrolling="no" 
+                        width="560" height="315" 
+                        src="${project.videoEmbed}" title="${project.title}" 
+                        frameborder="0" scrolling="no" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                         referrerpolicy="strict-origin-when-cross-origin" 
-                        allowfullscreen="true"
-                        allowFullScreen="true"
-                        >
+                        allowfullscreen="true">
                     </iframe>
                 </div>
             `;
-        } 
-        // Check if it has a standard image preview
-        else if (project.image) {
+        } else if (project.image) {
             mediaHTML = `
                 <div class="project-image-container">
                     <img src="${project.image}" alt="${project.title}">
@@ -96,21 +103,107 @@ function displayProjects(projectsToDisplay) {
     });
 }
 
-// Initial display of all projects
-function shuffle(cards) {
-  // Loop from the last element down to the second element
-  for (let i = cards.length - 1; i > 0; i--) {
-    // Pick a random index from 0 to i
-    const randomIndex = Math.floor(Math.random() * (i + 1));
-    
-    // Swap the elements using destructuring assignment
-    [cards[i], cards[randomIndex]] = [cards[randomIndex], cards[i]];
-  }
-  return cards;
-}
-displayProjects(shuffle(projects));
+// 3. Dynamic Sidebar Pill Generation (Alphabetical)
+//Add a global flag to track when the page is auto-scrolling
+let isAutoScrolling = false;
 
-// 3. Live search filtering listener
+function generateSidebarPills(projectsList) {
+    if (!sidebarContainer) return;
+    
+    sidebarContainer.innerHTML = ''; 
+
+    const sortedProjects = [...projectsList].sort((a, b) => 
+        a.title.localeCompare(b.title)
+    );
+
+    sortedProjects.forEach(project => {
+        const pill = document.createElement('div'); 
+        pill.className = 'project-pill';
+        
+        const targetId = createSlug(project.title);
+        pill.setAttribute('data-target', targetId);
+        pill.textContent = project.title;
+
+        // Hover Enter
+        pill.addEventListener('mouseenter', () => {
+            // IGNORE HOVER IF SCROLLING
+            if (isAutoScrolling) return; 
+
+            const matchingCard = document.getElementById(targetId);
+            if (matchingCard && !matchingCard.classList.contains('is-locked')) {
+                grid.prepend(matchingCard);
+                matchingCard.classList.add('featured-row');
+            }
+        });
+
+        // Hover Leave
+        pill.addEventListener('mouseleave', () => {
+            if (isAutoScrolling) return; 
+
+            const matchingCard = document.getElementById(targetId);
+            if (matchingCard && !matchingCard.classList.contains('is-locked')) {
+                matchingCard.classList.remove('featured-row');
+            }
+        });
+
+        // Click to Lock/Unlock
+        pill.addEventListener('click', () => {
+            const matchingCard = document.getElementById(targetId);
+            if (!matchingCard) return;
+
+            // --- UNLOCK LOGIC ---
+            // If it's already locked, click again to unlock it
+            if (pill.classList.contains('is-locked')) {
+                pill.classList.remove('is-locked');
+                matchingCard.classList.remove('is-locked', 'featured-row');
+                return; // Stop here so it doesn't re-lock
+            }
+
+            // --- LOCK LOGIC ---
+            // 1. Clear locks from all other pills and cards
+            document.querySelectorAll('.project-pill').forEach(p => p.classList.remove('is-locked'));
+            document.querySelectorAll('.project-card').forEach(c => {
+                c.classList.remove('is-locked');
+                c.classList.remove('featured-row');
+            });
+
+            // 2. Lock the clicked pill and card
+            pill.classList.add('is-locked');
+            matchingCard.classList.add('is-locked', 'featured-row');
+            grid.prepend(matchingCard);
+
+            // --- PREVENT ACCIDENTAL HOVERS ---
+            // 3. Turn on the scroll shield
+            isAutoScrolling = true;
+
+            // 4. Scroll smoothly
+            matchingCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // 5. Turn off the scroll shield after the scroll finishes (1000ms is a safe buffer)
+            setTimeout(() => {
+                isAutoScrolling = false;
+            }, 1000); 
+        });
+
+        sidebarContainer.appendChild(pill);
+    });
+}
+
+// 4. Initial Layout Setup
+function shuffle(cards) {
+    const cardsCopy = [...cards]; // Shuffle a copy to leave original intact
+    for (let i = cardsCopy.length - 1; i > 0; i--) {
+        const randomIndex = Math.floor(Math.random() * (i + 1));
+        [cardsCopy[i], cardsCopy[randomIndex]] = [cardsCopy[randomIndex], cardsCopy[i]];
+    }
+    return cardsCopy;
+}
+
+// Render both elements on page load
+displayProjects(shuffle(projects));
+generateSidebarPills(projects);
+
+// 5. Live search filtering listener
 searchInput.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase().trim();
 
@@ -122,24 +215,3 @@ searchInput.addEventListener('input', (e) => {
 
     displayProjects(filteredProjects);
 });
-
-// Sidebar pill hover effect
-const pills = document.querySelectorAll('.project-pill');
-
-pills.forEach(pill => {
-    const targetId = pill.getAttribute('data-target');
-    const matchingCard = document.getElementById(targetId);
-
-    if (matchingCard) {
-        pill.addEventListener('mouseenter', () => {
-            matchingCard.style.borderColor = '#FFD25F';
-            matchingCard.style.boxShadow = '0 0 20px rgba(255, 210, 95, 0.4)';
-        });
-
-        pill.addEventListener('mouseleave', () => {
-            matchingCard.style.borderColor = '#433360';
-            matchingCard.style.boxShadow = 'none';
-        });
-    }
-});
-

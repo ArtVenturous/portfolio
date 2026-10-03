@@ -13,15 +13,15 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "1",
             desc: "I am a human being.",
             bg: "#0b1a16", // Dark Forest Green
-            mediaType: "",
-            mediaSrc: ""
+            mediaType: "image",
+            mediaSrc: "./assets/human.jpg"
         },
         {
             title: "2",
             desc: "I am an artist.",
-            bg: "#111827", // Dark Slate Blue
-            mediaType: "",
-            mediaSrc: ""
+            bg: "#310707", 
+            mediaType: "image",
+            mediaSrc: "./assets/eye.jpg"
         },
         {
             title: "3",
@@ -32,29 +32,47 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     ];
 
-    // 2. Generate Cards Dynamically
+    // 2. Generate Cards & Backgrounds Dynamically
     showcaseData.forEach(data => {
+        // --- A. Build the Foreground Card ---
         const card = document.createElement('div');
         card.className = 'card hidden';
-        card.setAttribute('data-bg', data.bg);
         
-        let mediaHTML = '';
-        if (data.mediaType === 'image') {
-            mediaHTML = `<img src="${data.mediaSrc}" alt="${data.title}" class="card-media">`;
-        } else if (data.mediaType === 'video') {
-            // autoplay, muted, and loop are required for background videos
-            mediaHTML = `<video src="${data.mediaSrc}" autoplay loop muted playsinline class="card-media"></video>`;
+        // Generate the thumbnail and overlay for the side cards
+        let thumbnailHTML = '';
+        if (data.mediaType === 'image' && data.mediaSrc) {
+            thumbnailHTML = `
+                <img src="${data.mediaSrc}" class="card-thumbnail">
+                <div class="card-overlay"></div>
+            `;
+        } else if (data.mediaType === 'video' && data.mediaSrc) {
+            thumbnailHTML = `
+                <video src="${data.mediaSrc}" autoplay loop muted playsinline class="card-thumbnail"></video>
+                <div class="card-overlay"></div>
+            `;
         }
         
         card.innerHTML = `
-            ${mediaHTML}
-            <div class="card-overlay"></div>
+            ${thumbnailHTML}
             <div class="card-content">
                 <h2>${data.title}</h2>
                 <p>${data.desc}</p>
             </div>
         `;
         carouselContainer.appendChild(card);
+
+        // --- B. Build the Background Media Layer ---
+        const bgItem = document.createElement('div');
+        bgItem.className = 'bg-media-item';
+        bgItem.style.backgroundColor = data.bg || '#0b0d17';
+        
+        if (data.mediaType === 'image' && data.mediaSrc) {
+            bgItem.innerHTML = `<img src="${data.mediaSrc}">`;
+        } else if (data.mediaType === 'video' && data.mediaSrc) {
+            bgItem.innerHTML = `<video src="${data.mediaSrc}" autoplay loop muted playsinline></video>`;
+        }
+        
+        bgLayer.appendChild(bgItem);
     });
 
     const cards = document.querySelectorAll('.card');
@@ -96,8 +114,12 @@ document.addEventListener("DOMContentLoaded", () => {
         dots.forEach(dot => dot.classList.remove('active'));
         dots[currentIndex].classList.add('active');
 
-        // Smoothly update the background color
-        bgLayer.style.backgroundColor = cards[currentIndex].getAttribute('data-bg');
+        // Smoothly cross-fade the background media
+        const bgItems = document.querySelectorAll('.bg-media-item');
+        bgItems.forEach(item => item.classList.remove('active'));
+        if (bgItems[currentIndex]) {
+            bgItems[currentIndex].classList.add('active');
+        }
 
         // Lock animation spam
         setTimeout(() => {
