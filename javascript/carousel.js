@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
     let isAnimating = false;
 
-    // Define the 5 cards. Colors match the dark, moody aesthetic of the mockup.
+    // 1. Portfolio Data Array (Hardcoded)
     const showcaseData = [
         {
             title: "1",
@@ -26,9 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     ];
 
+    // 2. Generate Cards Dynamically
     showcaseData.forEach(data => {
         const card = document.createElement('div');
-        card.classList.add('card');
+        card.className = 'card hidden';
         card.setAttribute('data-bg', data.bg);
         
         card.innerHTML = `
@@ -42,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalCards = cards.length;
     let currentIndex = 0;
 
-    // Generate the indicator dots
+    // 3. Generate Indicator Dots
     cards.forEach((_, index) => {
         const dot = document.createElement('div');
         dot.classList.add('dot');
@@ -50,12 +51,14 @@ document.addEventListener("DOMContentLoaded", () => {
             if(isAnimating || currentIndex === index) return;
             currentIndex = index;
             updateCarousel();
+            resetAutoPlay();
         });
         indicatorsContainer.appendChild(dot);
     });
     
     const dots = document.querySelectorAll('.dot');
 
+    // 4. Core Rotation Logic
     function updateCarousel() {
         isAnimating = true;
 
@@ -75,84 +78,80 @@ document.addEventListener("DOMContentLoaded", () => {
         dots.forEach(dot => dot.classList.remove('active'));
         dots[currentIndex].classList.add('active');
 
-        // Smoothly update the background color to match the active card
+        // Smoothly update the background color
         bgLayer.style.backgroundColor = cards[currentIndex].getAttribute('data-bg');
 
         // Lock animation spam
         setTimeout(() => {
             isAnimating = false;
-        }, 800); // Matches --transition-speed in CSS
+        }, 800); 
     }
 
+    // 5. Click Navigation (Side Cards)
     cards.forEach((card, index) => {
         card.addEventListener('click', () => {
             if (isAnimating) return;
-            
-            // Only trigger rotation if the user clicks a side card
             if (card.classList.contains('prev') || card.classList.contains('next')) {
                 currentIndex = index;
                 updateCarousel();
+                resetAutoPlay();
             }
         });
     });
 
-    // Keyboard navigation
+    // 6. Keyboard Navigation
     document.addEventListener('keydown', (e) => {
         if (isAnimating) return;
         if (e.key === 'ArrowLeft') {
             currentIndex = (currentIndex - 1 + totalCards) % totalCards;
             updateCarousel();
+            resetAutoPlay();
         } else if (e.key === 'ArrowRight') {
             currentIndex = (currentIndex + 1) % totalCards;
             updateCarousel();
+            resetAutoPlay();
         }
     });
 
-    // Touch/Swipe navigation
+    // 7. Mobile Swipe Navigation
     let touchstartX = 0;
     let touchendX = 0;
-    const swipeThreshold = 50; // Minimum pixel distance to count as a swipe
+    const swipeThreshold = 50;
 
     carouselContainer.addEventListener('touchstart', e => {
         touchstartX = e.changedTouches[0].screenX;
+        stopAutoPlay();
     }, { passive: true });
 
     carouselContainer.addEventListener('touchend', e => {
         touchendX = e.changedTouches[0].screenX;
         handleSwipe();
+        startAutoPlay();
     }, { passive: true });
 
     function handleSwipe() {
         if (isAnimating) return;
-        
         const swipeDistance = touchendX - touchstartX;
         
-        // Swiped left (Next card)
         if (swipeDistance < -swipeThreshold) {
             currentIndex = (currentIndex + 1) % totalCards;
             updateCarousel();
-        }
-        // Swiped right (Previous card)
-        else if (swipeDistance > swipeThreshold) {
+            resetAutoPlay();
+        } else if (swipeDistance > swipeThreshold) {
             currentIndex = (currentIndex - 1 + totalCards) % totalCards;
             updateCarousel();
+            resetAutoPlay();
         }
     }
 
-    // Init first layout calculation
-    updateCarousel();
-
-    // --- AUTO-PLAY LOGIC ---
+    // 8. Auto-Play Logic
     let autoPlayInterval;
     const autoPlayDelay = 5000; // 5 seconds
 
     function startAutoPlay() {
-        // Clear any existing interval to prevent multiple timers running at once
         clearInterval(autoPlayInterval);
-        
         autoPlayInterval = setInterval(() => {
             if (isAnimating) return;
-            // Move to the next card
             currentIndex = (currentIndex + 1) % totalCards;
             updateCarousel();
         }, autoPlayDelay);
@@ -162,16 +161,18 @@ document.addEventListener("DOMContentLoaded", () => {
         clearInterval(autoPlayInterval);
     }
 
-    // 1. Start the auto-play when the page loads
+    function resetAutoPlay() {
+        stopAutoPlay();
+        startAutoPlay();
+    }
+
+    // Start auto-play on load
     startAutoPlay();
 
-    // 2. Pause when the mouse enters the carousel area
+    // Pause on hover
     carouselContainer.addEventListener('mouseenter', stopAutoPlay);
-
-    // 3. Resume when the mouse leaves the carousel area
     carouselContainer.addEventListener('mouseleave', startAutoPlay);
 
-    //Pause when a user touches the screen
-    carouselContainer.addEventListener('touchstart', stopAutoPlay, { passive: true });
-    carouselContainer.addEventListener('touchend', startAutoPlay, { passive: true });
+    // Initialize first layout calculation
+    updateCarousel();
 });
