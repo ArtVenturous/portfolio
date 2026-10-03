@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "3",
             desc: "I am a developer.",
             bg: "#1e111d", // Dark Purple/Maroon
-            mediaType: "",
-            mediaSrc: ""
+            mediaType: "image",
+            mediaSrc: "./assets/dev.png"
         },
     ];
 
