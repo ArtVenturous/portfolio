@@ -1,3 +1,7 @@
+:root {
+    --transition-speed: 0.8s;
+}
+
 *{
     box-sizing: border-box;
     object-fit: contain; 
@@ -300,6 +304,11 @@ a.active{
         width: 80%; /* Adjusts icon image size for smaller screens */
         height: 80%;
     }
+    .card { width: 75vw; padding: 20px; }
+    .card h2 { font-size: 1.5rem; }
+    .card p { font-size: 0.85rem; max-width: 100%; }
+    .card.prev { transform: translate(-110%, -50%) translateZ(-200px) rotateY(35deg); }
+    .card.next { transform: translate(10%, -50%) translateZ(-200px) rotateY(-35deg); }      
 }
 
 /* --- CYBER-POSTCARD CONTACT FORM --- */
@@ -319,9 +328,9 @@ a.active{
     }
 }
 
-/* Apply the animation to your postcard container */
+/* Apply the animation to postcard container */
 .contact-postcard {
-    background-color: #12142B; 
+    background-color: #121a2b; 
     color: #E2E8F0;
     max-width: 700px;
     margin: 2em auto;
@@ -387,7 +396,6 @@ a.active{
     background-color: #0B0D17;
 }
 
-/* Button matching your site's neon aesthetic */
 .contact-postcard .btn {
     background-color: transparent;
     color: #00F0FF;
@@ -407,3 +415,168 @@ a.active{
     color: #0B0D17;
     box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
 }
+
+/* Carousel Section */
+.carousel-section {
+    position: relative;
+    width: 100%;
+    /* This ensures the absolute background doesn't break out of the carousel area */
+}
+
+.carousel-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: background-color var(--transition-speed) ease-in-out;
+    z-index: -2; /* Keeps it strictly behind the vignette and the 3D cards */
+}
+.carousel-vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 10%, #030505 120%);
+    z-index: -1;
+    pointer-events: none;
+}
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    padding-top: 0; /* Removed top padding for better alignment */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1200px; /* Crucial for the pronounced 3D effect */
+    overflow: hidden;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80vw;
+    max-width: 1000px; /* Cap size on huge monitors */
+    height: 65vh;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Text sits at the bottom */
+    align-items: center;
+    text-align: center;
+    transform-origin: center center;
+    transition: transform var(--transition-speed) cubic-bezier(0.2, 0.8, 0.2, 1), 
+                opacity var(--transition-speed) cubic-bezier(0.2, 0.8, 0.2, 1),
+                filter var(--transition-speed) cubic-bezier(0.2, 0.8, 0.2, 1);
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.card h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    transition: transform var(--transition-speed);
+}
+
+.card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    transition: opacity var(--transition-speed);
+    
+    text-align: center; /* Overrides the global 'justify' */
+    text-indent: 0;     /* Removes the global 5% indent so it centers perfectly */
+    width: 100%;        /* Forces the paragraph to use the available card width */
+    max-width: 90%;     /* Prevents the text from touching the absolute edges of the card */
+}
+
+
+/* Center Card */
+.card.active {
+    transform: translate(-50%, -50%) translateZ(0px) rotateY(0deg);
+    width: 80vw;
+    opacity: 1;
+    z-index: 10;
+    pointer-events: auto;
+    border-color: rgba(255, 255, 255, 0.3);
+    background: linear-gradient(180deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.06) 100%);
+}
+
+/* Left Card (Pushed to left edge, sharply angled) */
+.card.prev {
+    /* translate(-130%) moves it left relative to its own 50vw width */
+    transform: translate(-135%, -50%) translateZ(-300px) rotateY(45deg);
+    opacity: 0.4;
+    z-index: 5;
+    pointer-events: auto;
+    cursor: pointer;
+    filter: brightness(0.6);
+}
+
+/* Right Card (Pushed to right edge, sharply angled) */
+.card.next {
+    transform: translate(35%, -50%) translateZ(-300px) rotateY(-45deg);
+    opacity: 0.4;
+    z-index: 5;
+    pointer-events: auto;
+    cursor: pointer;
+    filter: brightness(0.6);
+}
+
+/* Hover effects for side cards */
+.card.prev:hover, .card.next:hover {
+    opacity: 0.7;
+    filter: brightness(0.9);
+}
+
+/* Hidden Cards (Tucked far back) */
+.card.hidden {
+    transform: translate(-50%, -50%) translateZ(-800px) rotateY(0deg);
+    opacity: 0;
+    z-index: 1;
+}
+
+.indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 20;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: #ffffff;
+    transform: scale(1.5);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
