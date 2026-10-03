@@ -12,17 +12,23 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             title: "1",
             desc: "I am a human being.",
-            bg: "#0b1a16" // Dark Forest Green
+            bg: "#0b1a16", // Dark Forest Green
+            mediaType: "",
+            mediaSrc: ""
         },
         {
             title: "2",
             desc: "I am an artist.",
-            bg: "#111827" // Dark Slate Blue
+            bg: "#111827", // Dark Slate Blue
+            mediaType: "",
+            mediaSrc: ""
         },
         {
             title: "3",
             desc: "I am a developer.",
-            bg: "#1e111d" // Dark Purple/Maroon
+            bg: "#1e111d", // Dark Purple/Maroon
+            mediaType: "",
+            mediaSrc: ""
         },
     ];
 
@@ -32,9 +38,21 @@ document.addEventListener("DOMContentLoaded", () => {
         card.className = 'card hidden';
         card.setAttribute('data-bg', data.bg);
         
+        let mediaHTML = '';
+        if (data.mediaType === 'image') {
+            mediaHTML = `<img src="${data.mediaSrc}" alt="${data.title}" class="card-media">`;
+        } else if (data.mediaType === 'video') {
+            // autoplay, muted, and loop are required for background videos
+            mediaHTML = `<video src="${data.mediaSrc}" autoplay loop muted playsinline class="card-media"></video>`;
+        }
+        
         card.innerHTML = `
-            <h2>${data.title}</h2>
-            <p>${data.desc}</p>
+            ${mediaHTML}
+            <div class="card-overlay"></div>
+            <div class="card-content">
+                <h2>${data.title}</h2>
+                <p>${data.desc}</p>
+            </div>
         `;
         carouselContainer.appendChild(card);
     });
