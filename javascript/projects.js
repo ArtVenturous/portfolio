@@ -91,9 +91,22 @@ function displayProjects(projectsToDisplay) {
             `;
         }
 
+        // Check the project URL if it's external to determine if it should open in a new tab
+        let targetAttribute = "";
+        try {
+            // Passing window.location.origin handles relative paths gracefully
+            const parsedUrl = new URL(project.url, window.location.origin);
+            if (parsedUrl.hostname !== window.location.hostname) {
+                targetAttribute = 'target="_blank" rel="noopener noreferrer"';
+            }
+        } catch (e) {
+            // Fallback in case project.url is empty or an invalid format
+            console.error("Invalid URL encountered:", project.url);
+        }
+
         card.innerHTML = `
             <div>
-                <h3><a href="${project.url}" target="_blank" style="color: inherit; text-decoration: none;">${project.title}</a></h3>
+                <h3><a href="${project.url}" ${targetAttribute} style="color: inherit; text-decoration: none;">${project.title}</a></h3>
                 ${mediaHTML}
                 <p>${project.description}</p>
             </div>
@@ -179,10 +192,10 @@ function generateSidebarPills(projectsList) {
             // 4. Scroll smoothly
             matchingCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-            // 5. Turn off the scroll shield after the scroll finishes (1000ms is a safe buffer)
+            // 5. Turn off the scroll shield after the scroll finishes
             setTimeout(() => {
                 isAutoScrolling = false;
-            }, 1000); 
+            }, 2000); 
         });
 
         sidebarContainer.appendChild(pill);
