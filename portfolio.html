@@ -1,0 +1,765 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARTO Portfolio</title>
+    <link rel="icon" href="assets/icon.png">
+    
+    <style>
+        /* =========================================
+           1. THEME VARIABLES (Color Palettes)
+           ========================================= */
+        :root {
+            --transition-speed: 0.8s;
+        }
+
+        /* Cyber-Neon Theme (Home / Contact) */
+        body.theme-neon {
+            --bg-color: #0B0D17; 
+            --text-color: #E2E8F0; 
+            --accent-1: #00F0FF; 
+            --accent-2: #A855F7; 
+            --accent-3: #D946EF;
+            --nav-bg: rgba(11, 13, 23, 0.85); 
+            --header-grad: linear-gradient(135deg, #020024 0%, #0B0A26 50%, #1A1245 100%);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border-subtle: #1E1E3F;
+        }
+
+        /* Twilight Theme (Projects) */
+        body.theme-twilight {
+            --bg-color: #231C35; 
+            --text-color: #E0D8ED; 
+            --accent-1: #FFD25F; 
+            --accent-2: #FF7A85; 
+            --accent-3: #A78BFA;
+            --nav-bg: rgba(43, 34, 66, 0.85); 
+            --header-grad: linear-gradient(135deg, #2D2342 0%, #3F2E5E 50%, #543A6B 100%);
+            --card-bg: #231C35;
+            --border-subtle: #433360;
+        }
+
+        /* Light Theme (About / Resume) */
+        body.theme-light {
+            --bg-color: #F8FAFC; 
+            --text-color: #1E293B; 
+            --accent-1: #0284C7; 
+            --accent-2: #C026D3; 
+            --accent-3: #38BDF8;
+            --nav-bg: rgba(255, 255, 255, 0.75); 
+            --header-grad: linear-gradient(135deg, #F0F9FF 0%, #E0E7FF 50%, #F3E8FF 100%);
+            --card-bg: #FAFCFE;
+            --border-subtle: #E2E8F0;
+        }
+
+        /* =========================================
+           2. GLOBAL RESET & BASE ELEMENTS
+           ========================================= */
+        *, *::before, *::after {
+            box-sizing: border-box; 
+            object-fit: contain; 
+            transition: all 0.3s ease-in-out; 
+        }
+
+        html {
+            scroll-behavior: smooth; 
+            scroll-padding-top: 100px; /* Cushion for sticky navbar */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: clamp(16px, 1.5vw, 24px); 
+            font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        p {
+            text-indent: 5%; 
+            margin: 1%; 
+            text-align: justify; 
+            line-height: 1.6; 
+        }
+
+        p:hover { font-size: 110%; }
+
+        a {
+            color: var(--accent-1);
+            text-decoration: none; 
+        }
+
+        a:hover {
+            color: var(--accent-2);
+            text-shadow: 0 0 8px var(--accent-2); 
+        }
+
+        hr {
+            background-color: var(--accent-2);
+            border: none;
+            box-shadow: 0 0 10px var(--accent-2); 
+            height: 0.25vh; 
+        }
+
+        img {
+            max-width: 100%; 
+            height: auto; 
+            display: block; 
+        }
+
+        /* =========================================
+           3. PERSISTENT UI (Header, Nav, Layout)
+           ========================================= */
+        .header {
+            background: var(--header-grad);
+            width: 100%;
+            padding: 2em; 
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 2em; 
+        }
+
+        .header img {
+            width: 100px; 
+            border-left: 0.5vh solid var(--accent-1);
+            border-bottom: 0.5vh solid var(--accent-2);
+            border-right: 0.5vh solid var(--accent-3);
+            border-top-left-radius: 50%; 
+            border-top-right-radius: 50%; 
+        }
+
+        .header h1 {
+            margin: 0; 
+            font-size: 2.5em; 
+            color: var(--text-color);
+            text-shadow: 0 0 10px var(--accent-1); 
+            font-family: 'Orbitron', 'Montserrat', sans-serif; 
+            letter-spacing: 2px; 
+        }
+
+        .navbar {
+            width: 100%; 
+            background-color: var(--nav-bg); 
+            backdrop-filter: blur(10px); 
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 50; 
+            position: sticky; 
+            top: 0; 
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+        }
+
+        .navbar a {
+            padding: 1em 3em; 
+            text-align: center; 
+            font-weight: 600; 
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+            font-family: 'Montserrat', system-ui, sans-serif; 
+            color: inherit;
+        }
+
+        .navbar a:hover:not(.active) {
+            background-color: var(--border-subtle);
+            font-weight: bolder; 
+            color: var(--accent-1);
+        }
+
+        a.active {
+            background-color: var(--accent-1);
+            color: var(--bg-color);
+            box-shadow: 0 4px 10px var(--accent-1); 
+        }
+
+        .content-wrapper {
+            display: flex; 
+            flex-direction: row; 
+            flex: 1; 
+            width: 100%; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+        }
+
+        .side {
+            flex: 0 0 250px; 
+            padding: 1.5em 1.0em;
+            background-color: var(--bg-color); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+
+        .main {
+            flex: 1; 
+            padding: 2em 4em; 
+            border-left: 1px solid var(--border-subtle);
+        }
+
+        .main p::first-letter {
+            font-size: 150%; 
+            color: var(--accent-2); 
+            font-weight: bold; 
+        }
+
+        .main h1 {
+            font-weight: 700; 
+            font-family: 'Montserrat', sans-serif; 
+            border-bottom: 2px solid var(--accent-1); 
+            padding-bottom: 0.25em; 
+            color: var(--text-color); 
+            margin-top: 0; 
+        }
+
+        .footer {
+            text-align: center; 
+            font-family: 'Inter', sans-serif; 
+            letter-spacing: 1px; 
+            font-size: 0.85em; 
+            padding: 2em; 
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        /* =========================================
+           4. HOME PAGE VIEW (#home-view)
+           ========================================= */
+        @keyframes cyberPulse {
+            0% { border-color: var(--accent-1); box-shadow: 0 0 15px var(--accent-1); }
+            50% { border-color: var(--accent-2); box-shadow: 0 0 30px var(--accent-2); }
+            100% { border-color: var(--accent-1); box-shadow: 0 0 15px var(--accent-1); }
+        }
+
+        #home-view .carousel-section { position: relative; width: 100%; }
+        #home-view .carousel-bg-layer { position: absolute; inset: 0; z-index: 0; background-color: var(--bg-color); }
+        #home-view .carousel-vignette { position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(3,5,5,0.95) 120%); z-index: 3; pointer-events: none; }
+        
+        #home-view .bg-media-item { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity var(--transition-speed) ease-in-out; z-index: 1; }
+        #home-view .bg-media-item.active { opacity: 1; z-index: 2; }
+        #home-view .bg-media-item img, #home-view .bg-media-item video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); transition: transform 8s ease-out; }
+        #home-view .bg-media-item.active img, #home-view .bg-media-item.active video { transform: scale(1); }
+
+        #home-view .carousel-container { position: relative; width: 100%; height: 80vh; display: flex; justify-content: center; align-items: center; perspective: 1200px; overflow: hidden; }
+        #home-view .carousel { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+
+        #home-view .card { position: absolute; top: 50%; left: 50%; width: 80vw; max-width: 800px; height: 65vh; background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; transform-origin: center center; transition: transform var(--transition-speed) cubic-bezier(0.2, 0.8, 0.2, 1), opacity var(--transition-speed) cubic-bezier(0.2, 0.8, 0.2, 1); opacity: 0; pointer-events: none; }
+        #home-view .card.active { transform: translate(-50%, -50%) translateZ(0px) rotateY(0deg); opacity: 1; z-index: 10; pointer-events: auto; }
+        #home-view .card.prev { transform: translate(-155%, -50%) translateZ(-300px) rotateY(45deg); opacity: 0.4; z-index: 5; width: 40vw; }
+        #home-view .card.next { transform: translate(55%, -50%) translateZ(-300px) rotateY(-45deg); opacity: 0.4; z-index: 5; width: 40vw; }
+        #home-view .card.hidden { transform: translate(-50%, -50%) translateZ(-800px) rotateY(0deg); opacity: 0; z-index: 1; }
+
+        #home-view .card-thumbnail { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; transition: opacity var(--transition-speed) ease-in-out; }
+        #home-view .card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 60%, transparent 100%); z-index: 2; transition: opacity var(--transition-speed) ease-in-out; }
+        #home-view .card.active .card-thumbnail, #home-view .card.active .card-overlay { opacity: 0; pointer-events: none; }
+        #home-view .card-content { position: relative; z-index: 3; width: 100%; padding: 40px; margin-top: auto; display: flex; flex-direction: column; align-items: center; }
+
+        #home-view .indicators { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 20; }
+        #home-view .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); cursor: pointer; transition: all 0.3s ease; }
+        #home-view .dot.active { background: #ffffff; transform: scale(1.5); box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+
+        /* =========================================
+           5. PROJECTS PAGE VIEW (#projects-view)
+           ========================================= */
+        #projects-view .sidebar-pills-container { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+        #projects-view .project-pill { background-color: var(--border-subtle); border: 1px solid var(--accent-3); padding: 0.6rem 1rem; border-radius: 20px; text-align: center; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.5px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        #projects-view .project-pill:hover, #projects-view .project-pill.is-locked { background-color: var(--accent-1); color: var(--bg-color); border-color: var(--accent-1); }
+        #projects-view .project-pill.is-locked { background-color: rgba(255, 210, 95, 0.1); color: var(--accent-1); border-left: 4px solid var(--accent-1); font-weight: bold; }
+
+        #projects-view .search-box { margin: 1.5rem 0 2rem 0; }
+        #projects-view .search-box input { width: 100%; padding: 0.85rem 1.2rem; background-color: transparent; border: 1px solid var(--border-subtle); border-radius: 6px; color: inherit; }
+        #projects-view .search-box input:focus { outline: none; border-color: var(--accent-1); }
+
+        #projects-view .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+        #projects-view .project-card { background-color: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+        #projects-view .project-card:hover { transform: translateY(-4px); border-color: var(--accent-3); box-shadow: 0 6px 15px rgba(167, 139, 250, 0.2); }
+        #projects-view .project-card.featured-row { grid-column: 1 / -1; border-color: var(--accent-1); }
+        #projects-view .project-card h3 { margin-top: 0; font-family: 'Montserrat', sans-serif; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem; }
+        #projects-view .project-card p { text-indent: 0; font-size: 0.95rem; }
+        #projects-view .project-tech { display: inline-block; margin-top: 1rem; font-size: 0.75rem; color: var(--accent-1); text-transform: uppercase; letter-spacing: 1px; font-family: 'Montserrat', sans-serif; }
+        
+        #projects-view .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 6px; margin-bottom: 1rem; background-color: #0B0D17; }
+        #projects-view .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 6px; }
+        #projects-view .project-image-container img { border-radius: 6px; margin-bottom: 1rem; }
+
+        /* =========================================
+           6. ABOUT / CONTACT SHARED VIEWS
+           ========================================= */
+        #home-view .contact-postcard, #contact-view .contact-postcard { background-color: rgba(11, 13, 23, 0.7); max-width: 700px; margin: 2em auto; padding: 3em; border-radius: 8px; border: 2px solid var(--accent-1); animation: cyberPulse 4s infinite ease-in-out; }
+        #home-view .contact-postcard form, #contact-view .contact-postcard form { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+        #home-view .contact-postcard h2, #contact-view .contact-postcard h2 { font-family: 'Montserrat', sans-serif; color: #83c7ff; text-align: center; border-bottom: 2px solid #55a9f7; padding-bottom: 0.5em; margin-top: 0; text-shadow: 0 0 10px rgba(168, 85, 247, 0.4); }
+        #home-view .contact-postcard textarea, #contact-view .contact-postcard textarea { width: 100%; background-color: rgba(11, 13, 23, 0.7); border: 1px dashed var(--accent-2); border-radius: 4px; padding: 1.25rem; color: var(--text-color); font-family: 'Inter', sans-serif; font-size: 1rem; resize: vertical; min-height: 160px; transition: all 0.3s ease; }
+        #home-view .contact-postcard textarea:focus, #contact-view .contact-postcard textarea:focus { outline: none; border-color: var(--accent-1); box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); background-color: var(--bg-color); }
+        #home-view .contact-postcard .btn, #contact-view .contact-postcard .btn { align-self: center; background-color: transparent; color: var(--accent-1); border: 2px solid var(--accent-1); padding: 0.85rem 2rem; cursor: pointer; text-transform: uppercase; border-radius: 4px; font-weight: bold; }
+        #home-view .contact-postcard .btn:hover, #contact-view .contact-postcard .btn:hover { background-color: var(--accent-1); color: var(--bg-color); }
+
+        #about-view .icon-container, #contact-view .icon-container { display: flex; flex-direction: row; gap: 20px; justify-content: center; align-items: center; }
+        #about-view .icon-link, #contact-view .icon-link { display: inline-flex; width: 12.5%; height: 12.5%; border-radius: 10px; padding: 10px; }
+        #about-view .icon-link:hover, #contact-view .icon-link:hover { transform: scale(1.15); background-color: var(--accent-1); }
+        #about-view .icon-link:hover .icon-img, #contact-view .icon-link:hover .icon-img { filter: brightness(0) invert(1); }
+
+        /* =========================================
+           7. MOBILE RESPONSIVENESS
+           ========================================= */
+        @media screen and (max-width: 768px) {
+            .header { flex-direction: column; gap: 1em; text-align: center; }
+            .navbar { flex-direction: row; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; justify-content: flex-start; }
+            .navbar a { width: auto; flex: 1; white-space: nowrap; border-bottom: none; }
+            .navbar::-webkit-scrollbar { display: none; }
+            .content-wrapper { flex-direction: column; }
+            .side { flex: auto; width: 100%; border-bottom: 1px solid var(--border-subtle); }
+            .main { padding: 2em 1.5em; border-left: none; }
+
+            #about-view .side { position: sticky; top: 3.5rem; z-index: 4; }
+            #about-view .icon-container, #contact-view .icon-container { flex-direction: column; }
+            #about-view .icon-link, #contact-view .icon-link { width: 150px; height: 150px; }
+
+            #home-view .card { width: 75vw; padding: 20px; }
+            #home-view .card.prev { transform: translate(-110%, -50%) translateZ(-200px) rotateY(35deg); }
+            #home-view .card.next { transform: translate(10%, -50%) translateZ(-200px) rotateY(-35deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Semantic Header -->
+    <header class="header" id="header">
+        <img src="assets/profile.png" alt="Profile Picture" class="profile-pic">
+        <h1>April Rose Templo Orandain</h1>
+    </header>
+
+    <!-- 2. Semantic Navigation -->
+    <nav class="navbar">
+        <a href="#home" class="active" id="nav-home">Home</a>
+        <a href="#projects" id="nav-projects">Projects</a>
+        <a href="#about" id="nav-about">About</a>
+        <a href="#contact" id="nav-contact">Contact me</a>
+    </nav>
+
+    <!-- 3. Semantic Main Content Area (Dynamic Router Target) -->
+    <main id="app-root">
+        <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 50vh;">
+            <p>Initializing Systems...</p>
+        </div>
+    </main>
+
+    <!-- 4. Semantic Footer -->
+    <footer class="footer">
+        <h3><a href="#" id="back-to-top">Back to Top</a></h3>
+        <span>&copy; 2026 ARTO. All Rights Reserved.</span>
+    </footer>
+
+    <!-- 5. Single App Script -->
+    <script>
+        // =========================================================================
+        // GLOBAL STATE & INTERVAL TRACKERS (For Cleanup)
+        // =========================================================================
+        let autoPlayInterval = null;
+        let homeKeydownHandler = null;
+        let currentSearchListener = null;
+        let contactSubmitHandler = null;
+        let isAutoScrolling = false;
+
+        // =========================================================================
+        // MODULE: HOME PAGE
+        // =========================================================================
+        function mountHome(container) {
+            container.innerHTML = `
+                <div id="home-view">
+                    <section class="carousel-section">
+                        <div class="carousel-bg-layer" id="carousel-bg-layer"></div>
+                        <div class="carousel-vignette"></div>
+                        <div class="carousel-container" id="carousel-wrapper">
+                            <div class="carousel" id="carousel"></div>
+                            <div class="indicators" id="indicators"></div>
+                        </div>
+                    </section>
+                </div>
+            `;
+
+            const carouselContainer = document.getElementById('carousel');
+            const indicatorsContainer = document.getElementById('indicators');
+            const bgLayer = document.getElementById('carousel-bg-layer');
+            const carouselWrapper = document.getElementById('carousel-wrapper');
+
+            if (!carouselContainer) return;
+                    
+            let isAnimating = false;
+            let currentIndex = 0;
+
+            const showcaseData = [
+                { title: "1", desc: "I am a human being.", bg: "#0b1a16", mediaType: "image", mediaSrc: "./assets/human.jpg" },
+                { title: "2", desc: "I am an artist.", bg: "#310707", mediaType: "image", mediaSrc: "./assets/eye.jpg" },
+                { title: "3", desc: "I am a developer.", bg: "#1e111d", mediaType: "image", mediaSrc: "./assets/dev.png" }
+            ];
+            const totalCards = showcaseData.length;
+
+            showcaseData.forEach(data => {
+                const card = document.createElement('div');
+                card.className = 'card hidden';
+                
+                let thumbnailHTML = '';
+                if (data.mediaType === 'image' && data.mediaSrc) {
+                    thumbnailHTML = `<img src="${data.mediaSrc}" class="card-thumbnail"><div class="card-overlay"></div>`;
+                } else if (data.mediaType === 'video' && data.mediaSrc) {
+                    thumbnailHTML = `<video src="${data.mediaSrc}" autoplay loop muted playsinline class="card-thumbnail"></video><div class="card-overlay"></div>`;
+                }
+                
+                card.innerHTML = `${thumbnailHTML}<div class="card-content"><h2>${data.title}</h2><p>${data.desc}</p></div>`;
+                carouselContainer.appendChild(card);
+
+                const bgItem = document.createElement('div');
+                bgItem.className = 'bg-media-item';
+                bgItem.style.backgroundColor = data.bg || '#0b0d17';
+                if (data.mediaType === 'image' && data.mediaSrc) bgItem.innerHTML = `<img src="${data.mediaSrc}">`;
+                else if (data.mediaType === 'video' && data.mediaSrc) bgItem.innerHTML = `<video src="${data.mediaSrc}" autoplay loop muted playsinline></video>`;
+                bgLayer.appendChild(bgItem);
+            });
+
+            const cards = document.querySelectorAll('#home-view .card');
+
+            cards.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                dot.addEventListener('click', () => {
+                    if(isAnimating || currentIndex === index) return;
+                    currentIndex = index;
+                    updateCarousel();
+                    resetAutoPlay();
+                });
+                indicatorsContainer.appendChild(dot);
+            });
+            const dots = document.querySelectorAll('#home-view .dot');
+
+            function updateCarousel() {
+                isAnimating = true;
+                cards.forEach(card => card.className = 'card hidden');
+                const prevIndex = (currentIndex - 1 + totalCards) % totalCards;
+                const nextIndex = (currentIndex + 1) % totalCards;
+                cards[currentIndex].classList.replace('hidden', 'active');
+                cards[prevIndex].classList.replace('hidden', 'prev');
+                cards[nextIndex].classList.replace('hidden', 'next');
+
+                dots.forEach(dot => dot.classList.remove('active'));
+                dots[currentIndex].classList.add('active');
+
+                const bgItems = document.querySelectorAll('#home-view .bg-media-item');
+                bgItems.forEach(item => item.classList.remove('active'));
+                if (bgItems[currentIndex]) bgItems[currentIndex].classList.add('active');
+
+                setTimeout(() => { isAnimating = false; }, 800); 
+            }
+
+            cards.forEach((card, index) => {
+                card.addEventListener('click', () => {
+                    if (isAnimating) return;
+                    if (card.classList.contains('prev') || card.classList.contains('next')) {
+                        currentIndex = index;
+                        updateCarousel();
+                        resetAutoPlay();
+                    }
+                });
+            });
+
+            homeKeydownHandler = (e) => {
+                if (isAnimating) return;
+                if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + totalCards) % totalCards; updateCarousel(); resetAutoPlay(); }
+                else if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % totalCards; updateCarousel(); resetAutoPlay(); }
+            };
+            document.addEventListener('keydown', homeKeydownHandler);
+
+            let touchstartX = 0; let touchendX = 0;
+            carouselWrapper.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; stopAutoPlay(); }, { passive: true });
+            carouselWrapper.addEventListener('touchend', e => { touchendX = e.changedTouches[0].screenX; handleSwipe(); startAutoPlay(); }, { passive: true });
+
+            function handleSwipe() {
+                if (isAnimating) return;
+                const swipeDistance = touchendX - touchstartX;
+                if (swipeDistance < -50) { currentIndex = (currentIndex + 1) % totalCards; updateCarousel(); resetAutoPlay(); }
+                else if (swipeDistance > 50) { currentIndex = (currentIndex - 1 + totalCards) % totalCards; updateCarousel(); resetAutoPlay(); }
+            }
+
+            function startAutoPlay() { clearInterval(autoPlayInterval); autoPlayInterval = setInterval(() => { if (isAnimating) return; currentIndex = (currentIndex + 1) % totalCards; updateCarousel(); }, 5000); }
+            function stopAutoPlay() { clearInterval(autoPlayInterval); }
+            function resetAutoPlay() { stopAutoPlay(); startAutoPlay(); }
+
+            carouselWrapper.addEventListener('mouseenter', stopAutoPlay);
+            carouselWrapper.addEventListener('mouseleave', startAutoPlay);
+
+            updateCarousel(); startAutoPlay();
+        }
+
+        function unmountHome() {
+            if (autoPlayInterval) { clearInterval(autoPlayInterval); autoPlayInterval = null; }
+            if (homeKeydownHandler) { document.removeEventListener('keydown', homeKeydownHandler); homeKeydownHandler = null; }
+        }
+
+        // =========================================================================
+        // MODULE: PROJECTS PAGE
+        // =========================================================================
+        const projectsData = [
+            { title: "Automated Tricycle Fare Display System (ATFDS)", description: "Undergraduate Thesis Project: Arduino-based Real-Time Tricycle Fare Display System for Passenger Awareness in Virac, Catanduanes.", tech: "Arduino, Embedded Systems", videoEmbed: "https://www.youtube.com/embed/-TViXfhL0mM?si=8RhGcrp9X_wbavV4", url: "https://youtu.be/-TViXfhL0mM" },
+            { title: "Bridge to Tomorrow", description: "Empowering Minds Through ICT 3.0: A Digital Age Online Essay Writing Challenge Entry.", tech: "Essay, Literary", videoEmbed: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FDICTRegionVBicol%2Fvideos%2F736507965578864%2F&show_text=false&width=560&t=0", url: "projects/Literary Works/BridgeToTomorrow.html" },
+            { title: "Magkabilang Mundo", description: "A visual literary work exploring dual realities and emotional landscapes.", tech: "Visual Arts, Literary", image: "projects/Literary Works/Magkabilang Mundo/Magkabilang Mundo.jpg", url: "projects/Literary Works/MagkabilangMundo.html" },
+            { title: "Thoughts of a Wanderer", description: "Reflections on society, simulated freedom, and the search for absolute truth.", tech: "Philosophy, Prose", url: "projects/Literary Works/ThoughtsOfAWanderer.html" },
+            { title: "Stickman Adventures", description: "A very short stickman animation made using FlipaClip.", tech: "2D Animation", videoEmbed: "https://www.youtube.com/embed/TdfEaB891Gg?si=zJ_wUK8WS8CAbip5", url: "https://youtu.be/TdfEaB891Gg?si=zJ_wUK8WS8CAbip5" },
+            { title: "Space Tron", description: "A classic 2D 2-player game made using Scratch.", tech: "Visual Programming, Game Development", videoEmbed: "https://scratch.mit.edu/projects/227546816/embed", url: "https://scratch.mit.edu/projects/227546816/fullscreen" }
+        ];
+
+        let gridContainer = null;
+        let sidebarContainer = null;
+        let searchInput = null;
+
+        function mountProjects(container) {
+            container.innerHTML = `
+                <div id="projects-view" style="width: 100%; display: flex; flex: 1;">
+                    <div class="content-wrapper">
+                        <aside class="side">
+                            <div style="width: 100%;">
+                                <h3 style="text-align: center;">Overview</h3>
+                                <hr>
+                                <div class="sidebar-pills-container" id="sidebar-pills"></div>
+                            </div>
+                        </aside>
+                        <main class="main">
+                            <h1 style="text-align: center;">Library of Works</h1>
+                            <em style="display: block; text-align: center; margin-bottom: 1em;">What have I made so far?</em>
+                            <div class="search-box">
+                                <input type="text" id="search-input" placeholder="Search projects by title, description, or tech...">
+                            </div>
+                            <div id="project-grid" class="project-grid"></div>
+                        </main>
+                    </div>
+                </div>
+            `;
+            gridContainer = document.getElementById('project-grid');
+            sidebarContainer = document.getElementById('sidebar-pills');
+            searchInput = document.getElementById('search-input');
+
+            displayProjects(shuffleArray(projectsData));
+            generateSidebarPills(projectsData);
+
+            currentSearchListener = (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                const filteredProjects = projectsData.filter(project => 
+                    project.title.toLowerCase().includes(query) || 
+                    project.description.toLowerCase().includes(query) ||
+                    project.tech.toLowerCase().includes(query)
+                );
+                displayProjects(filteredProjects);
+            };
+            searchInput.addEventListener('input', currentSearchListener);
+        }
+
+        function unmountProjects() {
+            if (searchInput && currentSearchListener) searchInput.removeEventListener('input', currentSearchListener);
+            gridContainer = null; sidebarContainer = null; searchInput = null; currentSearchListener = null; isAutoScrolling = false;
+        }
+
+        function createSlug(text) { return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''); }
+        function shuffleArray(cards) {
+            const cardsCopy = [...cards]; 
+            for (let i = cardsCopy.length - 1; i > 0; i--) { const randomIndex = Math.floor(Math.random() * (i + 1)); [cardsCopy[i], cardsCopy[randomIndex]] = [cardsCopy[randomIndex], cardsCopy[i]]; }
+            return cardsCopy;
+        }
+
+        function displayProjects(projectsToDisplay) {
+            if (!gridContainer) return;
+            gridContainer.innerHTML = ""; 
+            if (projectsToDisplay.length === 0) { gridContainer.innerHTML = `<p style="grid-column: 1 / -1; text-align: center;">No matching projects found.</p>`; return; }
+            projectsToDisplay.forEach(project => {
+                const card = document.createElement('article');
+                card.className = 'project-card'; card.id = createSlug(project.title); 
+                let mediaHTML = "";
+                if (project.videoEmbed) { mediaHTML = `<div class="video-container"><iframe width="560" height="315" src="${project.videoEmbed}" frameborder="0" allowfullscreen="true"></iframe></div>`; } 
+                else if (project.image) { mediaHTML = `<div class="project-image-container"><img src="${project.image}" alt="${project.title}"></div>`; }
+                let targetAttribute = "";
+                try { if (new URL(project.url, window.location.origin).hostname !== window.location.hostname) targetAttribute = 'target="_blank" rel="noopener noreferrer"'; } catch (e) {}
+                card.innerHTML = `<div><h3><a href="${project.url}" ${targetAttribute} style="color: inherit; text-decoration: none;">${project.title}</a></h3>${mediaHTML}<p>${project.description}</p></div><span class="project-tech">${project.tech}</span>`;
+                gridContainer.appendChild(card);
+            });
+        }
+
+        function generateSidebarPills(projectsList) {
+            if (!sidebarContainer) return;
+            sidebarContainer.innerHTML = ''; 
+            const sortedProjects = [...projectsList].sort((a, b) => a.title.localeCompare(b.title));
+            sortedProjects.forEach(project => {
+                const pill = document.createElement('div'); pill.className = 'project-pill'; const targetId = createSlug(project.title); pill.textContent = project.title;
+                pill.addEventListener('mouseenter', () => { if (isAutoScrolling) return; const matchingCard = document.getElementById(targetId); if (matchingCard && !matchingCard.classList.contains('is-locked')) { gridContainer.prepend(matchingCard); matchingCard.classList.add('featured-row'); } });
+                pill.addEventListener('mouseleave', () => { if (isAutoScrolling) return; const matchingCard = document.getElementById(targetId); if (matchingCard && !matchingCard.classList.contains('is-locked')) matchingCard.classList.remove('featured-row'); });
+                pill.addEventListener('click', () => {
+                    const matchingCard = document.getElementById(targetId); if (!matchingCard) return;
+                    if (pill.classList.contains('is-locked')) { pill.classList.remove('is-locked'); matchingCard.classList.remove('is-locked', 'featured-row'); return; }
+                    document.querySelectorAll('.project-pill').forEach(p => p.classList.remove('is-locked')); document.querySelectorAll('.project-card').forEach(c => c.classList.remove('is-locked', 'featured-row'));
+                    pill.classList.add('is-locked'); matchingCard.classList.add('is-locked', 'featured-row'); gridContainer.prepend(matchingCard);
+                    isAutoScrolling = true; matchingCard.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => { isAutoScrolling = false; }, 2000); 
+                });
+                sidebarContainer.appendChild(pill);
+            });
+        }
+
+        // =========================================================================
+        // MODULE: ABOUT PAGE
+        // =========================================================================
+        function mountAbout(container) {
+            container.innerHTML = `
+                <div id="about-view" style="width: 100%; display: flex; flex: 1;">
+                    <div class="content-wrapper">
+                        <main class="main" style="width: 100%;">
+                            <section class="cv-section" style="margin-bottom: 4rem;">
+                                <h1 style="text-align: center;">Curriculum Vitae</h1>
+                                <iframe src="cv.html#profile" width="100%" style="height: 80vh; min-height: 600px; border: 1px solid var(--border-subtle); border-radius: 8px;"></iframe>
+                            </section>
+                            <section class="biography-section" style="display: flex; flex-direction: column; gap: 3rem;">
+                                <div id="1"><h1>Vision</h1><p>To be a successful and well-rounded individual who is capable of making a positive impact in the world through my skills, knowledge, and values.</p></div>
+                                <div id="2"><h1>Mission</h1><p>To continuously learn and grow as a person, to develop my skills and knowledge, and to use them to contribute to the betterment of society. To be a responsible and ethical individual who upholds the values of integrity, empathy, and respect for others.</p></div>
+                                <div id="3">
+                                    <h1>Autobiography</h1>
+                                    <p>Have ye ever wonder and asked thyself, Who am I? Well, 'tis a question we all ask ourselves at some point of our lives. Shall I ever answer that question, I answer thee <i>'I know not'</i>. For I am among those who are lost, I wander being led astray. For I am among those who are blind, I see not the path I am walking. For I am still asleep, I lay and still not woke at dawn. For so ye ever ask me, I have not lived whatever such we call as life.</p>
+                                    <p>Born the eldest of poor family, I was given responsibilities at such a young age. I was only 8 years old when I started storekeeping. For ye see, my family's living was <span title="5-6 Loan" style="border-bottom: 1px dotted currentColor; cursor: help;">loaned from a bombay</span>. While my father was unemployed, my mother didn't have a stable job back then. With three children having different needs and wants, my parents were really having a hard time. To earn extra living, my mother started a sari-sari store. Through my elementary years, every after class and when there were no classes I worked at that store. I remember I was only 9 years old when my parents first left me to run the store alone. It was no kidding —quite a tough work for a 9-year-old. I don't complain though; I did get my pocket money and every other needs from the store's income. The only thing I had about it was it felt like prison. 'Twas during those years, I grew up too fast. 'Twas the years I've lost my childhood.</p>
+                                    <p>Not long before those fateful years, I remember no pain, no worries, and no responsibilities. I remember the sweet taste of freedom, love and joy. 'Twas the time I lived with my grandparents. According to my grandmother, I was under their care immediately after I was born; the reason of which I know not. But for the time being, my grandparents gave me so much love and care. My grandparents lived in a big house and all day long I would play and roam around the rooms. Sometimes, I would play in the backyard where my grandfather tend animals such as roosters, chickens, and pigs. 'Twas quite fun.</p>
+                                    <p>When I lived with my grandparents, I had almost everything a kid would ask for— all that love and care and attention and all the time in the world. But though I had no worries, I was lonely. Imagine be it ye, a young child alone in a big house with almost no company. 'Tis true and why so might I say so? I was the only kid in the house. From time to time, my grandparents had other things to attend to and I was left to myself. When I do get out of the house, seldom shall I find other children in the neighborhood. I had lots nightmares about it. As a matter of fact, I never had any good dreams during my early childhood. Yet, I only lived with my grandparents up to the age of five and a half.</p>
+                                    <p>Quite the story of my childhood, isn't it —a lot of not-so-good stuff. There is something else. Perhaps one of the biggest turning point of my life was when my father had stroke. I remember I was in the fifth grade when it happened. Back at that time, we really had financial difficulties. On top of that, my two brothers got hospitalized for dengue too just a few months after my father's stroke. My mother couldn't pay the hospital fees. I had to open and close our store even when I have to go to school. What makes things much worse was I wasn't feeling well at that time. I was ill too but I didn't tell my mother. I just went through the illness as if it was nothing. Quite the bad luck, I had vigorous school activities to attend to also. I had to go through all that pain and burden, but thank God I made it.</p>
+                                    <p>Another turning point of my life was highschool. Perhaps one of the biggest choice I made was to study at <span title="Philippine Science High School-Bicol Region Campus" style="border-bottom: 1px dotted currentColor; cursor: help;">PSHS-BRC</span> or more colloquially known as Pisay. It was very far from my place. Ye see, I lived in Virac, Catanduanes and the school was in Goa, Camarines Sur. I had to cross waters inorder to get to the school. It was a tough decision, but the reason I chose that school was it offers more than the local schools in my home province. It offered me the chance of a better future. I was given the chance see the world.</p>
+                                    <p>Now why would I tell ye I have not lived, 'tis for this reason: I don't remember ever living my life. For so I was there when it was happening, I have not experienced it. For I know it happened, but I don't remember it happening. Because never do I recall living the present, I dwell in the past and the future.</p>
+                                    <p>I find it quite odd, I tend to write in Old English during my adolescent years. I wrote the last preceding paragraphs during my highschool life. And at the moment, I write as an adult. Perhaps to continue my story or just maybe out of boredom. Because my life have not yet ended. I am still alive. There is still so much to tell that I may never get to tell. I may look at the life differently now in ways I may have not seen before. I may rewrite the same old chapters with different perspectives... or I may add more... I may insert in between words the little sprinkles or spices that make life seem more flavourful... more colourful... more alive.</p>
+                                    <p>Probably the very first major decision I made with my life was signing that scholarship contract at 13 years old. Allow me to recount what had happened in the years of my life as <span title="Philippine Science High School Scholar" style="border-bottom: 1px dotted currentColor; cursor: help;">a Pisay scholar</span>. Where do I even begin telling the story of this chapter in my life? Because the person that I am undoubtedly had been shaped by the person I was and the person that I will be would always be forged by the person that I am.</p>
+                                    <p>So, who had I been? I never liked puberty; Because suddenly I was changing from the inside in ways I didn't understand at the time. Going to Pisay is something I never even dreamed of, but I learned that it's something many young people or even their families would strive for. Just being part of "the cream of the crop", as many of my teachers then would say, is already a great privilege. Despite our family's struggles, my mother had leashed a small space at a public market in Libmanan, Camarines Sur, where she tried to put up a sari-sari store so that we would have a place to go to instead of a hotel whenever she would come to visit and fetch me from school. And so, my highschool life diverged into these places: Pisay, our temporary home at the public market, and the first home I grew up in.</p>
+                                </div>
+                            </section>
+                        </main>
+                    </div>
+                </div>
+            `;
+        }
+        function unmountAbout() {}
+
+        // =========================================================================
+        // MODULE: CONTACT PAGE
+        // =========================================================================
+        function mountContact(container) {
+            container.innerHTML = `
+                <div id="contact-view" style="width: 100%; display: flex; flex: 1;">
+                    <div class="content-wrapper">
+                        <main class="main" style="width: 100%;">
+                            <section id="contact-section">
+                                <h1>Get in touch</h1>
+                                <div class="contact-postcard">
+                                    <h2>What goes on?</h2>
+                                    <form id="contact-form">
+                                        <div class="postcard-message-side" style="grid-column: span 2;">
+                                            <div class="form-group">
+                                                <textarea id="message" name="message" rows="6" placeholder="Write your message here... what would you like to say to me?" required></textarea>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn">Send via Email</button>
+                                    </form>
+                                </div>
+                                <br><br>
+                                <h1>Contact Me</h1>
+                                <p style="text-align: justify;">If you would like to get in touch with me further, please feel free to reach out through any of the following:</p>
+                                <div class="icon-container">
+                                    <a href="https://www.facebook.com/artorandain/" target="_blank" class="icon-link" rel="noopener noreferrer">
+                                        <img src="assets/facebook.png" alt="Facebook" class="icon-img">
+                                    </a>
+                                    <a href="tel:+639085007951" target="_blank" class="icon-link" rel="noopener noreferrer">
+                                        <img src="assets/phone-call.png" alt="Phone" class="icon-img">
+                                    </a>
+                                </div>
+                            </section>
+                        </main>
+                    </div>
+                </div>
+            `;
+            const contactForm = document.getElementById('contact-form');
+            contactSubmitHandler = (e) => {
+                e.preventDefault();
+                const messageInput = document.getElementById('message');
+                if (!messageInput) return;
+                const message = messageInput.value;
+                const myEmail = 'april.orandain@gmail.com';
+                const subject = encodeURIComponent('A Message from Portfolio');
+                const body = encodeURIComponent(message);
+                window.open(`mailto:${myEmail}?subject=${subject}&body=${body}`, '_blank', 'noopener,noreferrer');
+                contactForm.reset();
+            };
+            if (contactForm) contactForm.addEventListener('submit', contactSubmitHandler);
+        }
+        
+        function unmountContact() {
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm && contactSubmitHandler) contactForm.removeEventListener('submit', contactSubmitHandler);
+            contactSubmitHandler = null;
+        }
+
+        // =========================================================================
+        // THE ENGINE: SITE ROUTER (Executes Last)
+        // =========================================================================
+        document.addEventListener("DOMContentLoaded", () => {
+            const appRoot = document.getElementById('app-root');
+            const navLinks = document.querySelectorAll('.navbar a');
+            let currentRoute = '';
+
+            // Dynamic Navbar height for scrolling padding
+            function updateNavHeight() {
+                const navbar = document.querySelector('.navbar');
+                if (navbar) {
+                    document.documentElement.style.scrollPaddingTop = `${navbar.offsetHeight + 20}px`;
+                }
+            }
+            updateNavHeight();
+            window.addEventListener('resize', updateNavHeight);
+
+            // Routing Logic
+            function handleRouting() {
+                const hash = window.location.hash || '#home';
+                if (hash === currentRoute) return;
+
+                // 1. Unmount Active Scene
+                if (currentRoute === '#home') unmountHome();
+                if (currentRoute === '#projects') unmountProjects();
+                if (currentRoute === '#about') unmountAbout();
+                if (currentRoute === '#contact') unmountContact();
+
+                appRoot.innerHTML = '';
+                document.body.className = '';
+
+                // 2. Mount New Scene & Set Theme
+                if (hash === '#home') { document.body.classList.add('theme-neon'); mountHome(appRoot); } 
+                else if (hash === '#projects') { document.body.classList.add('theme-twilight'); mountProjects(appRoot); } 
+                else if (hash === '#about') { document.body.classList.add('theme-light'); mountAbout(appRoot); } 
+                else if (hash === '#contact') { document.body.classList.add('theme-neon'); mountContact(appRoot); } 
+                else { document.body.classList.add('theme-neon'); appRoot.innerHTML = `<div style="text-align:center; padding:5em;"><h1>404</h1><p>Signal Lost.</p></div>`; }
+
+                // 3. Update UI
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === hash) link.classList.add('active');
+                });
+                currentRoute = hash;
+                window.scrollTo(0, 0); 
+            }
+
+            // Bind Routing
+            window.addEventListener('hashchange', handleRouting);
+            handleRouting();
+
+            // Back to Top Block Default anchor behavior
+            const backToTopBtn = document.getElementById('back-to-top');
+            if (backToTopBtn) {
+                backToTopBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
