@@ -55,6 +55,7 @@ body.theme-light {
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 10vw;
 }
 
 body {
@@ -103,6 +104,20 @@ img {
     max-width: 100%;
     height: auto;
     display: block;
+}
+
+@keyframes lightPulse {
+    0% { border-color: var(--accent-1); box-shadow: 0 0 15px var(--accent-1); }
+    50% { border-color: var(--accent-2); box-shadow: 0 0 30px var(--accent-2); }
+    100% { border-color: var(--accent-3); box-shadow: 0 0 15px var(--accent-3); }
+}
+
+iframe {
+    width: 100%;  
+    height: 75vh;  
+    border: 0.2vw solid var(--accent-3); 
+    border-radius: 8px;  
+    animation: lightPulse 4s infinite ease-in-out;  
 }
 
 /* =========================================
@@ -184,6 +199,7 @@ a.active {
 .side {
     flex: 0 0 250px;  
     padding: 1.5em 1.0em;
+    border-right: 1px solid var(--border-subtle);
     background-color: var(--bg-color); 
     display: flex; 
     flex-direction: column; 
@@ -193,7 +209,6 @@ a.active {
 .main {
     flex: 1;  
     padding: 2em 4em;  
-    border-left: 1px solid var(--border-subtle);
 }
 
 .main p::first-letter {
@@ -211,6 +226,12 @@ a.active {
     margin-top: 0;  
 }
 
+.main em{
+    color: var(--accent-1); 
+    font-size: 0.95em;
+    font-weight: 600; 
+}
+
 .footer {
     text-align: center;  
     font-family: 'Inter', sans-serif;  
@@ -223,24 +244,13 @@ a.active {
 /* =========================================
    HOME PAGE VIEW
    ========================================= */
-@keyframes lightPulse {
-    0% { border-color: var(--accent-1); box-shadow: 0 0 15px var(--accent-1); }
-    50% { border-color: var(--accent-2); box-shadow: 0 0 30px var(--accent-2); }
-    100% { border-color: var(--accent-1); box-shadow: 0 0 15px var(--accent-1); }
-}
 
-#home-view iframe {
-    width: 100%;  
-    height: 80vh;  
-    border: 0.2vw solid var(--accent-3); 
-    border-radius: 8px;  
-    animation: lightPulse 4s infinite ease-in-out;  
-}
 
+/* --- Carousel --- */
 #home-view .carousel-container {
     position: relative;  
     width: 100%;  
-    height: 80vh;  
+    height: 75vh;  
     display: flex;  
     justify-content: center;  
     align-items: center;  
@@ -277,6 +287,27 @@ a.active {
     pointer-events: none;  
 }
 
+#home-view .card h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    transition: transform var(--transition-speed);
+}
+
+#home-view .card p {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    transition: opacity var(--transition-speed);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    text-align: center; /* Overrides the global 'justify' */
+    text-indent: 0;     /* Removes the global 5% indent so it centers perfectly */
+    width: 100%;        /* Forces the paragraph to use the available card width */
+    max-width: 90%;     /* Prevents the text from touching the absolute edges of the card */
+}
+
+
 #home-view .card.active {
     transform: translate(-50%, -50%) translateZ(0px) rotateY(0deg);  
     opacity: 1;  
@@ -285,40 +316,159 @@ a.active {
 }
 
 #home-view .card.prev {
-    transform: translate(-155%, -50%) translateZ(-300px) rotateY(45deg);  
+    transform: translate(-175%, -50%) translateZ(-300px) rotateY(45deg);  
     opacity: 0.4;  
     z-index: 5;  
-    width: 40vw;  
+    width: 50vw;  
 }
 
 #home-view .card.next {
-    transform: translate(55%, -50%) translateZ(-300px) rotateY(-45deg);  
+    transform: translate(75%, -50%) translateZ(-300px) rotateY(-45deg);  
     opacity: 0.4;  
     z-index: 5;  
-    width: 40vw;  
+    width: 50vw;  
 }
 
-#home-view .contact-postcard {
+#home-view .carousel-section {
+    position: relative;
+    width: 100%;
+}
+
+#home-view .carousel-bg-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-color: var(--bg-color);
+}
+
+#home-view .bg-media-item {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease-in-out;
+    z-index: 1;
+}
+
+#home-view .bg-media-item.active {
+    opacity: 1;
+    z-index: 3;
+}
+
+#home-view .bg-media-item img,
+#home-view .bg-media-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* transform: scale(1.05); */
+    /* transition: transform 8s ease-out; */
+}
+
+#home-view .bg-media-item.active img,
+#home-view .bg-media-item.active video {
+    transform: scale(1);
+}
+
+#home-view .carousel-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(3,5,5,0.95) 120%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+#home-view .card-thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    transition: opacity var(--transition-speed) ease-in-out;
+}
+
+#home-view .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+    z-index: 3;
+    transition: opacity var(--transition-speed) ease-in-out;
+}
+
+#home-view .card.active .card-thumbnail,
+#home-view .card.active .card-overlay {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#home-view .card-content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    padding: 40px;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#home-view .card.hidden {
+    transform: translate(-50%, -50%) translateZ(-800px) rotateY(0deg);
+    opacity: 0;
+    z-index: 1;
+}
+
+#home-view .indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 20;
+}
+
+#home-view .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#home-view .dot.active {
+    background: #ffffff;
+    transform: scale(1.5);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+#home-view .contact-postcard,
+#contact-view .contact-postcard {
     background-color: rgba(11, 13, 23, 0.7); 
-    max-width: 700px;  
-    margin: 2em auto;  
-    padding: 3em;  
-    border-radius: 8px;  
+    max-width: 700px; 
+    margin: 2em auto; 
+    padding: 3em; 
+    border-radius: 8px; 
     border: 2px solid var(--accent-1);
-    animation: lightPulse 4s infinite ease-in-out;  
+    animation: cyberPulse 4s infinite ease-in-out; 
 }
 
-#home-view .contact-postcard .btn {
-    background-color: transparent;  
+#home-view .contact-postcard .btn,
+#contact-view .contact-postcard .btn {
+    background-color: transparent; 
     color: var(--accent-1);
     border: 2px solid var(--accent-1);
-    padding: 0.85rem 2rem;  
-    cursor: pointer;  
-    text-transform: uppercase;  
-    border-radius: 4px;  
+    padding: 0.85rem 2rem; 
+    cursor: pointer; 
+    text-transform: uppercase; 
+    border-radius: 4px; 
 }
 
-#home-view .contact-postcard .btn:hover {
+#home-view .contact-postcard .btn:hover,
+#contact-view .contact-postcard .btn:hover {
     background-color: var(--accent-1);
     color: var(--bg-color);
 }
@@ -360,7 +510,46 @@ a.active {
 
 #projects-view .search-box input:focus {
     outline: none; 
+    background-color: var(--nav-bg);
     border-color: var(--accent-1);
+}
+
+
+/* --- Search Box Spacing --- */
+#projects-view .search-box {
+    margin: 1.5rem 0 2rem 0;
+}
+
+/* --- Project Pill Details --- */
+#projects-view .project-pill {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#projects-view .project-pill.is-locked {
+    background-color: rgba(255, 210, 95, 0.1); 
+    color: var(--accent-1);
+    border-left: 4px solid var(--accent-1);
+    font-weight: bold;
+}
+
+/* --- Project Card Internals --- */
+#projects-view .project-card {
+    justify-content: space-between; /* Pushes the tech tags to the bottom */
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#projects-view .project-card:hover {
+    box-shadow: 0 6px 15px rgba(167, 139, 250, 0.2);
+}
+
+#projects-view .project-card h3 {
+    margin-top: 0;
+    font-family: 'Montserrat', sans-serif;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 0.5rem;
 }
 
 #projects-view .project-grid {
@@ -388,8 +577,51 @@ a.active {
     border-color: var(--accent-1);
 }
 
+/* Crucial: Removes the global 5% text indent so card text aligns cleanly */
+#projects-view .project-card p {
+    text-indent: 0; 
+    font-size: 0.95rem;
+}
+
+#projects-view .project-tech {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: var(--accent-1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* --- Responsive Video Container (16:9 Aspect Ratio) --- */
+#projects-view .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* Forces the 16:9 box */
+    height: 0;
+    overflow: hidden;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    background-color: #0B0D17;
+}
+
+#projects-view .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 6px;
+}
+
+#projects-view .project-image-container img {
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
 /* =========================================
-   ABOUT / CV PAGE VIEW
+   ABOUT / CONTACT PAGE VIEW
    ========================================= */
 #about-view .cv-card {
     background: var(--card-bg);
@@ -420,7 +652,8 @@ a.active {
     gap: 1.25rem; 
 }
 
-#about-view .icon-container {
+#about-view .icon-container,
+#contact-view .icon-container {
     display: flex; 
     flex-direction: row; 
     gap: 20px; 
@@ -428,7 +661,8 @@ a.active {
     align-items: center; 
 }
 
-#about-view .icon-link {
+#about-view .icon-link,
+#contact-view .icon-link {
     display: inline-flex; 
     width: 12.5%; 
     height: 12.5%; 
@@ -436,13 +670,78 @@ a.active {
     padding: 10px; 
 }
 
-#about-view .icon-link:hover {
+#about-view .icon-link:hover,
+#contact-view .icon-link:hover {
     transform: scale(1.15); 
     background-color: var(--accent-1);
 }
 
-#about-view .icon-link:hover .icon-img {
+#about-view .icon-link:hover .icon-img,
+#contact-view .icon-link:hover .icon-img {
     filter: brightness(0) invert(1); 
+}
+
+/* CONTACT FORM */
+#contact-view .contact-postcard {
+    background-color: var(--card-bg); 
+    color: var(--text-color);
+    max-width: 700px;
+    margin: 2em auto;
+    padding: 3em;
+    border-radius: 8px;
+    position: relative;
+    
+    /* Set initial border and trigger the continuous pulse */
+    border: 2px solid var(--accent-1);
+    animation: lightPulse 4s infinite ease-in-out;
+}
+
+
+#home-view .contact-postcard form,
+#contact-view .contact-postcard form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+#home-view .contact-postcard .btn,
+#contact-view .contact-postcard .btn {
+    align-self: center; 
+}
+
+#home-view .contact-postcard h2,
+#contact-view .contact-postcard h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: #83c7ff;
+    text-align: center;
+    border-bottom: 2px solid #55a9f7;
+    padding-bottom: 0.5em;
+    margin-top: 0;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+}
+
+#home-view .contact-postcard textarea,
+#contact-view .contact-postcard textarea {
+    width: 100%;
+    background-color: rgba(11, 13, 23, 0.7);
+    border: 1px dashed var(--accent-2);
+    border-radius: 4px;
+    padding: 1.25rem;
+    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 160px;
+    transition: all 0.3s ease;
+}
+
+#home-view .contact-postcard textarea:focus,
+#contact-view .contact-postcard textarea:focus {
+    outline: none;
+    border-color: var(--accent-1);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    background-color: var(--nav-bg);
 }
 
 /* =========================================
@@ -487,6 +786,7 @@ a.active {
     .main {
         padding: 2em 1.5em;  
         border-left: none;  
+        width: 100%;
     }
 
     /* Mobile specific adjustments per page */
@@ -496,11 +796,13 @@ a.active {
         z-index: 4; 
     }
 
-    #about-view .icon-container {
+    #about-view .icon-container,
+    #contact-view .icon-container {
         flex-direction: column; 
     }
     
-    #about-view .icon-link {
+    #about-view .icon-link,
+    #contact-view .icon-link {
         width: 150px; 
         height: 150px; 
     }
@@ -511,10 +813,10 @@ a.active {
     }
     
     #home-view .card.prev { 
-        transform: translate(-110%, -50%) translateZ(-200px) rotateY(35deg);  
+        transform: translate(-125%, -50%) translateZ(-200px) rotateY(60deg);  
     }
     
     #home-view .card.next { 
-        transform: translate(10%, -50%) translateZ(-200px) rotateY(-35deg);  
+        transform: translate(25%, -50%) translateZ(-200px) rotateY(-60deg);  
     }
 }

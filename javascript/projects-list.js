@@ -1,7 +1,6 @@
-// ==========================================
-// 1. PROJECT DATA RESOURCE
-// ==========================================
-const projectsData = [
+// JavaScript for Real-Time Search and Rendering
+// 1. Project Data Array
+const projects = [
     {
         title: "Automated Tricycle Fare Display System (ATFDS)",
         description: "Undergraduate Thesis Project: Arduino-based Real-Time Tricycle Fare Display System for Passenger Awareness in Virac, Catanduanes.",
@@ -45,123 +44,32 @@ const projectsData = [
     }
 ];
 
-// ==========================================
-// 2. GLOBAL STATE & REFERENCES
-// ==========================================
-let gridContainer = null;
-let sidebarContainer = null;
-let searchInput = null;
-let currentSearchListener = null;
-let isAutoScrolling = false;
+const grid = document.getElementById('project-grid');
+const searchInput = document.getElementById('search-input');
+const sidebarContainer = document.getElementById('sidebar-pills'); 
 
-// ==========================================
-// 3. THE MOUNT FUNCTION (Like _ready in Godot)
-// ==========================================
-function mountProjects(container) {
-    // Inject the HTML skeleton for the Projects View
-    container.innerHTML = `
-        <div id="projects-view" style="width: 100%; display: flex; flex: 1;">
-            <div class="content-wrapper">
-                
-                <!-- Sidebar Overview List -->
-                <aside class="side">
-                    <div style="width: 100%;">
-                        <h3 style="text-align: center;">Overview</h3>
-                        <hr>
-                        <!-- Interactive Pill Container -->
-                        <div class="sidebar-pills-container" id="sidebar-pills"></div>
-                    </div>
-                </aside>
-
-                <!-- Main Content Area with Search & Grid -->
-                <main class="main">
-                    <h1 style="text-align: center;">Library of Works</h1>
-                    <em style="display: block; text-align: center; margin-bottom: 1em;">What have I made so far?</em>
-                    
-                    <!-- Search Bar Input -->
-                    <div class="search-box">
-                        <input type="text" id="search-input" placeholder="Search projects by title, description, or tech...">
-                    </div>
-
-                    <!-- Dynamic Grid -->
-                    <div id="project-grid" class="project-grid"></div>
-                </main>
-
-            </div>
-        </div>
-    `;
-
-    // Grab the DOM elements we just injected
-    gridContainer = document.getElementById('project-grid');
-    sidebarContainer = document.getElementById('sidebar-pills');
-    searchInput = document.getElementById('search-input');
-
-    // Render the initial shuffled layout
-    displayProjects(shuffleArray(projectsData));
-    generateSidebarPills(projectsData);
-
-    // Attach the Search Listener
-    currentSearchListener = (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        const filteredProjects = projectsData.filter(project => {
-            return project.title.toLowerCase().includes(query) || 
-                   project.description.toLowerCase().includes(query) ||
-                   project.tech.toLowerCase().includes(query);
-        });
-        displayProjects(filteredProjects);
-    };
-    searchInput.addEventListener('input', currentSearchListener);
-}
-
-// ==========================================
-// 4. THE UNMOUNT FUNCTION (Like queue_free)
-// ==========================================
-function unmountProjects() {
-    // Safely detach the event listener to prevent memory leaks
-    if (searchInput && currentSearchListener) {
-        searchInput.removeEventListener('input', currentSearchListener);
-    }
-    
-    // Clear references
-    gridContainer = null;
-    sidebarContainer = null;
-    searchInput = null;
-    currentSearchListener = null;
-    isAutoScrolling = false;
-}
-
-// ==========================================
-// 5. HELPER FUNCTIONS
-// ==========================================
-
+// Helper function to create matching IDs for cards and pills
 function createSlug(text) {
     return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 }
 
-function shuffleArray(cards) {
-    const cardsCopy = [...cards]; 
-    for (let i = cardsCopy.length - 1; i > 0; i--) {
-        const randomIndex = Math.floor(Math.random() * (i + 1));
-        [cardsCopy[i], cardsCopy[randomIndex]] = [cardsCopy[randomIndex], cardsCopy[i]];
-    }
-    return cardsCopy;
-}
-
+// 2. Render function for the project cards
 function displayProjects(projectsToDisplay) {
-    if (!gridContainer) return;
-    gridContainer.innerHTML = ""; 
+    grid.innerHTML = ""; 
 
     if (projectsToDisplay.length === 0) {
-        gridContainer.innerHTML = `<p style="grid-column: 1 / -1; text-align: center;">No matching projects found.</p>`;
+        grid.innerHTML = `<p style="grid-column: 1 / -1; text-align: center;">No matching projects found.</p>`;
         return;
     }
 
     projectsToDisplay.forEach(project => {
         const card = document.createElement('article');
         card.className = 'project-card'; 
+        // Assign the generated ID to the card so the pill can find it
         card.id = createSlug(project.title); 
 
         let mediaHTML = "";
+        
         if (project.videoEmbed) {
             mediaHTML = `
                 <div class="video-container">
@@ -183,13 +91,16 @@ function displayProjects(projectsToDisplay) {
             `;
         }
 
+        // Check the project URL if it's external to determine if it should open in a new tab
         let targetAttribute = "";
         try {
+            // Passing window.location.origin handles relative paths gracefully
             const parsedUrl = new URL(project.url, window.location.origin);
             if (parsedUrl.hostname !== window.location.hostname) {
                 targetAttribute = 'target="_blank" rel="noopener noreferrer"';
             }
         } catch (e) {
+            // Fallback in case project.url is empty or an invalid format
             console.error("Invalid URL encountered:", project.url);
         }
 
@@ -201,15 +112,22 @@ function displayProjects(projectsToDisplay) {
             </div>
             <span class="project-tech">${project.tech}</span>
         `;
-        gridContainer.appendChild(card);
+        grid.appendChild(card);
     });
 }
 
+// 3. Dynamic Sidebar Pill Generation (Alphabetical)
+//Add a global flag to track when the page is auto-scrolling
+let isAutoScrolling = false;
+
 function generateSidebarPills(projectsList) {
     if (!sidebarContainer) return;
+    
     sidebarContainer.innerHTML = ''; 
 
-    const sortedProjects = [...projectsList].sort((a, b) => a.title.localeCompare(b.title));
+    const sortedProjects = [...projectsList].sort((a, b) => 
+        a.title.localeCompare(b.title)
+    );
 
     sortedProjects.forEach(project => {
         const pill = document.createElement('div'); 
@@ -221,10 +139,12 @@ function generateSidebarPills(projectsList) {
 
         // Hover Enter
         pill.addEventListener('mouseenter', () => {
+            // IGNORE HOVER IF SCROLLING
             if (isAutoScrolling) return; 
+
             const matchingCard = document.getElementById(targetId);
             if (matchingCard && !matchingCard.classList.contains('is-locked')) {
-                gridContainer.prepend(matchingCard);
+                grid.prepend(matchingCard);
                 matchingCard.classList.add('featured-row');
             }
         });
@@ -232,6 +152,7 @@ function generateSidebarPills(projectsList) {
         // Hover Leave
         pill.addEventListener('mouseleave', () => {
             if (isAutoScrolling) return; 
+
             const matchingCard = document.getElementById(targetId);
             if (matchingCard && !matchingCard.classList.contains('is-locked')) {
                 matchingCard.classList.remove('featured-row');
@@ -243,30 +164,67 @@ function generateSidebarPills(projectsList) {
             const matchingCard = document.getElementById(targetId);
             if (!matchingCard) return;
 
-            // Unlock Logic
+            // --- UNLOCK LOGIC ---
+            // If it's already locked, click again to unlock it
             if (pill.classList.contains('is-locked')) {
                 pill.classList.remove('is-locked');
                 matchingCard.classList.remove('is-locked', 'featured-row');
-                return; 
+                return; // Stop here so it doesn't re-lock
             }
 
-            // Lock Logic
+            // --- LOCK LOGIC ---
+            // 1. Clear locks from all other pills and cards
             document.querySelectorAll('.project-pill').forEach(p => p.classList.remove('is-locked'));
             document.querySelectorAll('.project-card').forEach(c => {
-                c.classList.remove('is-locked', 'featured-row');
+                c.classList.remove('is-locked');
+                c.classList.remove('featured-row');
             });
 
+            // 2. Lock the clicked pill and card
             pill.classList.add('is-locked');
             matchingCard.classList.add('is-locked', 'featured-row');
-            gridContainer.prepend(matchingCard);
+            grid.prepend(matchingCard);
 
-            // Scroll Animation Shielding
+            // --- PREVENT ACCIDENTAL HOVERS ---
+            // 3. Turn on the scroll shield
             isAutoScrolling = true;
+
+            // 4. Scroll smoothly
             matchingCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-            setTimeout(() => { isAutoScrolling = false; }, 2000); 
+            // 5. Turn off the scroll shield after the scroll finishes
+            setTimeout(() => {
+                isAutoScrolling = false;
+            }, 2000); 
         });
 
         sidebarContainer.appendChild(pill);
     });
 }
+
+// 4. Initial Layout Setup
+function shuffle(cards) {
+    const cardsCopy = [...cards]; // Shuffle a copy to leave original intact
+    for (let i = cardsCopy.length - 1; i > 0; i--) {
+        const randomIndex = Math.floor(Math.random() * (i + 1));
+        [cardsCopy[i], cardsCopy[randomIndex]] = [cardsCopy[randomIndex], cardsCopy[i]];
+    }
+    return cardsCopy;
+}
+
+// Render both elements on page load
+displayProjects(shuffle(projects));
+generateSidebarPills(projects);
+
+// 5. Live search filtering listener
+searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+
+    const filteredProjects = projects.filter(project => {
+        return project.title.toLowerCase().includes(query) || 
+                project.description.toLowerCase().includes(query) ||
+                project.tech.toLowerCase().includes(query);
+    });
+
+    displayProjects(filteredProjects);
+});
