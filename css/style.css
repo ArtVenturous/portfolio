@@ -764,6 +764,7 @@ a.active {
 
     .navbar a {
         width: auto;  
+        padding: 1em;
         flex: 1;  
         white-space: nowrap;  
         border-bottom: none;  
