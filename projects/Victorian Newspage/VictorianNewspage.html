@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Newspage</title>
+	<link rel="icon" href="1.jpg">
+	<style>
+		*{ text-align: center;box-sizing: border-box; object-fit: cover; margin: 0; padding: 0;transition: all 0.5s ease-in-out;-webkit-transition: all 0.5s ease-in-out;-moz-transition: all 0.5s ease-in-out;scroll-behavior: smooth;}
+		html{background-color: #575757;}
+		body{
+			margin: 0;
+			padding: 0;
+			background-color: #575757;
+			font-size: 1.25vw;
+			transition: font-size 2s;
+			font-family: sans-serif;
+			text-align: justify;
+		}
+
+		p {font-size:125%;color: #555;text-indent: 1.5rem;text-align: justify; margin-bottom: 1rem;}
+		p:hover{font-size: 150%}
+		div[class^="col"] div:first-of-type p:first-of-type::first-letter{ font-size: 132%; color:#160f04; font-weight: bold;font-family: "Old English Text MT","Algerian","Rockwell Extra Bold";  }
+		a { color: #0F5B7F;  text-decoration:none; }
+		a:hover { animation:; }
+		img{max-height: 50ch;max-width: 75vw;filter: sepia(50%) saturate(100%);}
+		img:hover{filter: drop-shadow(0.05em 0.5em 0.5em black);height: 100%;width: 100%;max-height: 100%;max-width: 100%;}
+		picture{height: 100%;position: relative;}
+		picture element{ width: 100%;position: absolute;bottom: 0.5ex;right:50%;z-index: 2;opacity: 0.6;background-color: gray;padding: 1%;border:0.5ex double black;font-size: 75%;color: white;}
+		picture element:hover{font-size: 100%;width:90%; right:50%;bottom: 2ex;background-color: black;}
+
+		ul { list-style : none;  }
+		li { list-style-type: none;	color: #F29900;}
+		li a { color: #546078;  }
+		li a:hover { color: #F29900; }
+
+		audio{width: 20%;height:-4vw;display: block;margin: 0 auto;position: relative;}
+		iframe, video{border: 0.2em dotted #c9ab69;border-top-style: solid;border-left-style: outset; width: 100%;height:100%;background-color: #ddcaa1;filter: drop-shadow(0.05em 0.5em 0.5em black);}
+		/* ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+		.content{ color:  #3B2A0A; background: url(bg2.jpg) top/100% repeat-y;overflow: hidden;}
+		.content div {padding: 2em 4em;}
+		.content div:not(.CC div):not([class^="col"] div){padding: 0 5em;display: flex;}
+		.content hr{ border: none;width: 75%;padding:0.15vh;margin: 1em auto 0 auto;background-color:tan; }
+		.content #main { background:#575757 url(bg.jpg) top/100% no-repeat; height: 33em;padding: 0 6em;}
+
+
+		/*HEADER*/
+		#header { background: url(header.jpg) top/100% no-repeat; height: 19.9em; color: #3B2A0A;padding:0 4em;margin:0;width: 100%;}
+		#header h1 { font: bold 6.75em "Algerian","AR ESSENCE","Tahoma"; color:#b75203;text-shadow: -0.2vw 0.2vh #663000; line-height:0.8em;letter-spacing: -0.1; transition-timing-function: ease-in;}
+		#header h3 { font: bold 2em "Old English Text MT","Mistral","Bauhaus 93","Tahoma"; color: #000;font-style: oblique; transition-timing-function: linear; }
+		#header .title { padding: 5em 36em 0 0em; transition: letter-spacing 0.5s;}
+		#header .title a:hover { text-decoration: none; letter-spacing: 0.6em;cursor: none;}
+		#smbl{color:#c95903;font-size: 125%;font-family: "Vivaldi","Imprint MT Shadow","GothicI";}
+		#head { text-align: right;color: #c9ab69;font-size: 2em;letter-spacing: 0.2em;position: absolute;top: 16.25ch; right: 5ch;}
+
+
+		/*MAIN CONTENT*/
+		#mnh{ font-size: 5vw;font-family:"Segoe UI Black","Agency FB";text-align: center;letter-spacing: -0.08em;}
+		.col1,.col2,.col3,.col4{width:fit-content;height: auto;font-family:"Andalus","Swis721 BT","Segoe UI","Calibri";padding: 3rem 6rem;transition: all 2s ease-in-out;text-align: justify-all;}
+		.col1 div, .col2 div, .col3 div, .col4 div {
+ 			display: block; /* Overrides display: flex */
+  			column-fill: balance;
+  			column-gap: 2em;
+			column-wrap: wrap;
+  			-webkit-column-gap: 2em;
+  			-moz-column-gap: 2em;
+		}	
+		.col1 div { column-count: 1; -webkit-column-count: 1; -moz-column-count: 1; }
+		.col2 div { column-count: 2; -webkit-column-count: 2; -moz-column-count: 2; }
+		.col3 div { column-count: 3; -webkit-column-count: 3; -moz-column-count: 3; }
+		.col4 div { column-count: 4; -webkit-column-count: 4; -moz-column-count: 4; }
+		.col1:hover div{column-count:4;-webkit-column-count:4;-moz-column-count:4;}
+		.col2:hover div{column-count:1;-webkit-column-count:1;-moz-column-count:1;}
+		.col3:hover div{column-count:2;-webkit-column-count:2;-moz-column-count:2;}
+		.col4:hover div{column-count:3;-webkit-column-count:3;-moz-column-count:3;}
+		div[class^="col"] img {
+    		display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease;
+			transform-origin: center center;
+			column-span: auto; 
+			text-align: center;
+			border: 0.1em dashed #555;
+			background: repeating-radial-gradient(white,cornsilk,oldlace,wheat,moccasin,khaki);
+			transition: all 3s;
+		}
+
+
+		/*NAVIGATION BAR*/
+		.nav{position: fixed;padding-top:2%;top: 0; right: 0;z-index: 3;font-size: 150%;height: 100vh; }
+		.nav li { margin: 1em 0;text-align: right;}
+		.nav li a,#i{background: -webkit-linear-gradient(right,navajowhite,khaki,khaki,khaki,khaki,sandybrown,red,red,darkred);color:#0a425c;font-family:"Poor Richard","Maiandra GD","Century Gothic";border: 0.15vw solid black;border-right: none; border-top-left-radius:0.5em; border-bottom-left-radius: 0.5em;padding: 0.25em 0;transition: padding 0.75s,font-size 0.5s, background-color 1s, border 2s;}
+		.nav li a:hover,.art:hover #i{padding: 0 1em;font-size: 135%;font-family: "Bernard MT Condensed","Britannic Bold",fantasy;color: saddlebrown;background: -webkit-linear-gradient(right,yellow,yellow,gold,gold,red,darkred);border: none;}
+		#cles {margin: 0;padding: 0;}
+		#cles li{margin: 0;padding: 0;all:initial;}
+		#cles li a{font-size: 200%;border: unset;padding: 0;background: unset;font-family: "Britannic Bold";}
+		.art #cles{display: none;}
+		.art:hover #cles{display: inline-block;-webkit-display: inline-block;}
+		#cles:hover li a:hover{font-family: "Bernard MT Condensed";color: #2d1606;text-decoration:underline;}
+
+		/* PREFOOTER */
+		#prefooter { background: url(prefooter.jpg) top/100% repeat-y; color: #85621f; height: 18.2em; text-align: left;  clear: both; padding: 3em 6em 1em 22em; margin: 0; }
+		#prefooter h2 { line-height: 0.2em;text-align: left; }
+		#prefooter hr{width: 95%;background-color:#85621f;text-align: left;padding: 0.1em 0; margin: 1em 0 1em 0;border: none; }
+		#prefooter a { color: #85621f; text-decoration:none; }	
+		#prefooter a:hover{  font-size: 110%; color:#160f04 }
+		#prefooter .CC div{ width: 50% ;text-align: left;float: left; display: block; padding: 0 2em;width:100%} 
+
+		/* FOOTER */
+		#footer {background: url(footer.jpg) top/100% no-repeat; color: #8f8f8f; height: 4em; text-align: right; font-size: 90%; clear: both; padding: 2em 6em; margin: 0;}
+		#footer a {color: #999;  text-decoration:none; }
+		#footer a:hover { text-decoration: underline; color: #FFF;}
+
+
+		.out{position: fixed;top: 0;left: 0;width:6em;height: 100vh;}
+
+
+	</style>
+</head>
+<body>
+	<div class="content">
+		<div id="header">
+			<div class="title">
+				<a href="project.html">
+					<h1><b id="smbl">V</b>ictorious</h1>
+					<h3><span style="font-style: normal;">&#9749;</span>Quarterly News</h3>
+					<h4>-2nd Edition-</h4>
+				</a>
+			</div>
+			<h2 id="head">20JUN1837-VICTORIAN ERA-22JAN1901</h2>	
+		</div>
+		<div id="main">
+			<!-- <video src="mov.mp4" poster="mov.png" width="100%" height="98%"  loop autoplay  controls>
+				Your browser does not support the video tag.
+			</video> -->
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/xGbSWxqmeUc?si=JQgrH3SI0QUKLdPH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		</div>
+		<br>
+		<i id="A"><hr></i>
+		<h1 id="mnh">OLD LOVE STORY COMES ANEW</h1>
+		<audio controls>
+			<source src="1.mp3" type="audio/mpeg">
+			Your browser does not support the audio tag.
+		</audio>
+		<div class="col4">
+			<div>
+				<p><b>Despite its title, "<i>Sonnets from the Portuguese</i>" (a sequence of love poems) is not a translation,</b> but a very personal telling of the love story of Elizabeth Barrett and the poet Robert Browning. Elizabeth, who had been living in virtual seclusion with only her spaniel, Flush, as a companion in a home dominated by an iron-willed, classically Victorian father, received a fan letter from Browning which led to their meeting, to their falling in love, and ultimately to their elopement and marriage.</p>
+				<picture>
+					<a target="_blank" href="1.jpg"><img src="1.jpg"></a>
+					<element>Elizabeth Barret Browning's <i>Sonnets from the Portuguese</i></element>
+				</picture>
+				<p>This sonnet sequence by Elizabeth(1806-1861) first appeared in Poems (1850). The title was misleading, as they were not in fact translations from Portuguese originals. This was a deliberate attempt to mask the poems' intimate content: they were composed before her marriage to Robert Browning in 1846, and the suggestion that they were translations allowed her to express her feelings without embarrassment. Barrett Browning (1806-1861) did not originally intend to publish the poems. Even her husband was unaware of their existence until 1849, when he urged her to make them public. 'The Portuguese' also refers to Catarina from a previous poem 'Catarina to Camoens': Camoens (1524-1580) is considered Portugal's greatest poet. Sonnet-writing was associated with male writers, but Barrett Browning's efforts are profoundly moving and impressively inventive.</p>
+				<p>The poems were very popular during the poet's lifetime, and they remain so today. They are in many ways typically Victorian with their tone of gloom and sorrow, their almost morbid sensitivity to illness and death, their great outpouring of feeling as love develops, and the force and intensity of their passion. Elizabeth had been in frail health since childhood, and she fully expected to live alone until an early death. The lover in the poems, as Robert did in her life, brings about her resurrection from a living death, giving her faith in herself and the courage to live fully in the wide world beyond her father's house.</p>
+				<p>The poems, because of the universality of the feelings they express and their complex patterns of religious symbolism, carry meaning far beyond the personal story and its Victorian identity. They are deservedly still admired and still read.</p>
+			</div>
+		</div>
+		<br>
+		<i id="B"><hr></i>
+		<h1 id="mnh">CRITICS REVIVES OLD WORKS</h1>
+		<audio controls>
+		<source src="2.mp3" type="audio/mpeg">
+		Your browser does not support the audio tag.
+		</audio>
+		<div class="col3">
+			<div>
+				<picture>
+					<a target="_blank" href="2.jpg"><img src="2.jpg"></a>
+					<element>Glimpse into the streets of the Victorian Era</element>
+				</picture>
+				<p><b>Nineteenth-Century Literature Criticism assembles critical responses to the works of 19th-century authors of all sorts&mdash;novelists, poets, playwrights, journalists, philosophers, political leaders, scientists, mathematicians and other creative writers from every region of the world.</b></p>
+				<p>The series currently covers nearly 600 authors and also includes numerous entries focusing on literary topics and individual works. Students writing papers or class presentations, instructors preparing their syllabi, or anyone seeking a deeper understanding of the 19th century will find this a highly useful resource. </p>
+				<p>Each of the more than 300 volumes in Nineteenth-Century Literature Criticism profiles approximately three to six novelists, poets, playwrights, journalists, philosophers or other creative and nonfiction writers by providing full-text or excerpted criticism reproduced from books, magazines, literary reviews, newspapers and scholarly journals.</p>
+				<p>Clear, accessible introductory essays followed by carefully selected critical responses allow end-users to engage with a variety of scholarly views and conversations about authors, works, and literary topics. Introductory essays are written and entries compiled by professional literature researchers and other subject matter experts; many include an author portrait. A full citation and annotation precede each of the approximately 50 essays per volume.</p>
+				<p>Each volume in this long-standing series profiles approximately four to eight literary figures who died between 1800 and 1899 by providing full-text or excerpted criticism taken from books, magazines, literary reviews, newspapers, and scholarly journals.</p>
+			</div>
+		</div>
+		<br>
+		<i id="C"><hr></i>
+		<h1 id="mnh">THE UNSTAMPED RAGES WAR</h1>
+		<audio controls>
+		<source src="3.mp3" type="audio/mpeg">
+		Your browser does not support the audio tag.
+		</audio>
+		<div class="col2">
+			<div>
+				<p><b>In August 1819, more than 60,000 angry Britons gathered in Manchester to demand parliamentary reform.</b> When officials attempted to arrest the ringleaders, as many as 18 unarmed protesters were killed and 500 more injured. Afraid that England was about to spiral into its own version of the French Revolution, politicians swiftly imposed a number of repressive laws&mdash;including the Newspaper and Stamp Duties Act.</p>
+				<p>Four years earlier, the government had raised a tax on newspapers. The new law expanded that tax and effectively gagged the radical press, increasing the cost of most individual newspapers to seven pence&mdash;a price most readers could not afford. A related tax on paper forced mainstream newspapers to cram all stories into as few pages as possible, and a drop in circulation forced them to depend more on advertising for funds.</p>
+				<p>Intellectuals derided this &ldquo;Tax on Knowledge,&rdquo; which made British newspapers four times more expensive than US papers. In the 1830s, a number of rebellious publishers began printing and selling cheap untaxed papers to the public. (One penny paper was called The Poor Man&rsquo;s Guardian.) Nearly 800 people were jailed for participating in this black market.</p>
+				<p>In 1836, the tax was reduced. The price of papers dropped, readership surged, and by the time the tax was abolished in 1855, the number of papers printed quadrupled to over 120 million a year. Now publishers had a new problem: competition. As cheap papers vied for the eyeballs of new readers and advertisers, the substance of the news changed: Editors increasingly turned to photographs, illustrations, and interviews.</p>
+				<picture>
+				<a target="_blank" href="3.jpg"><img src="3.jpg"></a>
+				<element>This dense layout was the indirect result of a bloody act of rebellion. </element>
+				</picture>
+			</div>
+		</div>
+		<br>
+	</div>
+
+	<div id="prefooter">
+		<h2>REFERENCES</h2>
+		<hr>
+		<div class="CC">
+			<div>
+				<a href="http://www.w3schools.com">&#x25BA; W3Schools Tutorials Library</a><br>
+				<a href="https://qz.com/emails/quartz-obsession/1165691/">&#x25BA; Victorian Newspapers</a><br>
+				<a href="https://www.bl.uk/works/sonnets-from-the-portuguese">&#x25BA; Sonnets from the Portuguese</a><br>
+				<a href="https://www.gale.com/c/nineteenth-century-literature-criticism">&#x25BA; 19th Century Literature Criticism</a><br>
+				<a href="http://www.free-css-templates.com">&#x25BA; Manuscript Free Template By Herreman David </a> <br>
+				<a href="https://www.enotes.com/topics/sonnets-from-portuguese/in-depth">&#x25BA; Analysis of '<i>Sonnets from the Portuguese</i>'</a><br>
+			</div>
+		</div> 	
+	</div>
+
+	<div id="footer">
+		Copyright &copy; 2018 ComSci Project &#9474; By: <a href="#">April Rose Orandain</a> &#9474; <a href="#">9-Beryllium</a> &#9474; <a href="#">2nd Quarter</a> &#9474; <a href="#">Computer Science 3</a> &#9474; <a href="#header">Back to Top</a>
+	</div>
+
+	<div class="nav">
+		<ul>
+			<li><a href="#header">&#9978;Home</a></li>
+			<li class="art">
+				<span id="i">&#10024;Articles 
+					<ul id="cles"> 
+						<li><a href="#A">&#9998;1</a></li>
+						<li><a href="#B">&#9998;2</a></li>
+						<li><a href="#C">&#9998;3</a></li>
+					</ul>
+				</span>
+			</li>
+			<li><a href="#prefooter">&#10067;About</a></li>
+		</ul>
+	</div>
+</body>
+</html>
