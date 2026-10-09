@@ -41,6 +41,13 @@ const projects = [
         tech: "Visual Programming, Game Development",
         videoEmbed: "https://scratch.mit.edu/projects/227546816/embed",
         url: "https://scratch.mit.edu/projects/227546816/fullscreen"
+    },
+    {
+        title: "Victorian Newspage",
+        description: "A digital recreation of a Victorian-era  themed newspaper, showcasing historical events and stories.",
+        tech: "Video Editing, Web Design (HTML+CSS)",
+        videoEmbed: "https://www.youtube.com/embed/xGbSWxqmeUc?si=JQgrH3SI0QUKLdPH",
+        url: "projects/Victorian Newspage/VictorianNewspage.html"
     }
 ];
 

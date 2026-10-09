@@ -42,6 +42,13 @@ const projectsData = [
         tech: "Visual Programming, Game Development",
         videoEmbed: "https://scratch.mit.edu/projects/227546816/embed",
         url: "https://scratch.mit.edu/projects/227546816/fullscreen"
+    },
+    {
+        title: "Victorian Newspage",
+        description: "A digital recreation of a Victorian-era  themed newspaper, showcasing historical events and stories.",
+        tech: "Video Editing, Web Design (HTML+CSS)",
+        videoEmbed: "https://www.youtube.com/embed/xGbSWxqmeUc?si=JQgrH3SI0QUKLdPH",
+        url: "projects/Victorian Newspage/VictorianNewspage.html"
     }
 ];
 
@@ -55,7 +62,7 @@ let currentSearchListener = null;
 let isAutoScrolling = false;
 
 // ==========================================
-// 3. THE MOUNT FUNCTION (Like _ready in Godot)
+// 3. THE MOUNT FUNCTION
 // ==========================================
 function mountProjects(container) {
     // Inject the HTML skeleton for the Projects View
